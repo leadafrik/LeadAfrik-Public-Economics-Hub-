@@ -118,6 +118,34 @@ export interface HomeSettings {
   featuredEpisode?: SanityEpisode
 }
 
+export interface LearningModule {
+  _id: string
+  title: string
+  slug: {current: string}
+  description: string
+  content?: any[]
+  estimatedTime?: string
+  lessons?: Array<{
+    title: string
+    duration?: number
+  }>
+  relatedPosts?: SanityPost[]
+  relatedDocuments?: SanityDocument[]
+  relatedEpisodes?: SanityEpisode[]
+  order?: number
+}
+
+export interface LearnSettings {
+  _id: string
+  pageTitle: string
+  pageDescription: string
+  instructionsTitle: string
+  instructions?: Array<{
+    step: number
+    description: string
+  }>
+}
+
 export interface AboutSettings {
   _id: string
   hubTitle: string

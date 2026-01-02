@@ -157,3 +157,44 @@ export const ABOUT_SETTINGS_QUERY = `
     founderEmail,
   }
 `
+
+export const ALL_LEARNING_MODULES_QUERY = `
+  *[_type == "learningModule"] | order(order asc) {
+    _id,
+    title,
+    slug,
+    description,
+    content,
+    estimatedTime,
+    lessons,
+    relatedPosts[]->,
+    relatedDocuments[]->,
+    relatedEpisodes[]->,
+    order,
+  }
+`
+
+export const SINGLE_LEARNING_MODULE_QUERY = `
+  *[_type == "learningModule" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    description,
+    content,
+    estimatedTime,
+    lessons,
+    relatedPosts[]->,
+    relatedDocuments[]->,
+    relatedEpisodes[]->,
+  }
+`
+
+export const LEARN_SETTINGS_QUERY = `
+  *[_type == "learnSettings"][0] {
+    _id,
+    pageTitle,
+    pageDescription,
+    instructionsTitle,
+    instructions,
+  }
+`
