@@ -1,139 +1,55 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-
-interface Dataset {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  coverage: string;
-  variables: string[];
-  format: string;
-  price: number;
-}
-
-const DATASETS: Dataset[] = [
-  {
-    id: 'cpi-monthly',
-    title: 'CPI Monthly (2005–2025)',
-    description: 'Consumer Price Index by month, cleaned and indexed. All subindices included.',
-    category: 'Inflation & Prices',
-    coverage: 'Monthly, 2005–2025 (240 data points)',
-    variables: ['Month', 'Year', 'Overall CPI', 'Food & Non-Alcoholic Beverages', 'Alcoholic Beverages & Tobacco', 'Clothing & Footwear', 'Housing & Utilities', 'Health', 'Transport', 'Communication', 'Recreation', 'Education', 'Restaurants & Hotels', 'Miscellaneous'],
-    format: 'Excel (.xlsx)',
-    price: 25,
-  },
-  {
-    id: 'population-county',
-    title: 'Population by County (2009–2024)',
-    description: 'Consistent county boundaries, cleaned from census and KNBS estimates. Total population and breakdown.',
-    category: 'Demographics',
-    coverage: '47 counties, annual (2009, 2012, 2019, annual estimates 2020–2024)',
-    variables: ['County', 'Year', 'Total Population', 'Male', 'Female', 'Urban', 'Rural', 'Density (per km²)'],
-    format: 'Excel (.xlsx)',
-    price: 20,
-  },
-  {
-    id: 'unemployment-labour',
-    title: 'Employment & Unemployment (2005–2024)',
-    description: 'Quarterly unemployment rate, labour force participation, employment by sector.',
-    category: 'Labour Market',
-    coverage: 'Quarterly, 2005–2024 (80 data points)',
-    variables: ['Quarter', 'Year', 'Unemployment Rate (%)', 'Labour Force Participation (%)', 'Employed (thousands)', 'Agriculture', 'Manufacturing', 'Services', 'Other'],
-    format: 'Excel (.xlsx)',
-    price: 30,
-  },
-  {
-    id: 'government-revenue',
-    title: 'Government Revenue & Tax Collection (2010–2024)',
-    description: 'Monthly government revenue, tax collection by type, breakdown by source.',
-    category: 'Public Finance',
-    coverage: 'Monthly, 2010–2024 (168 data points)',
-    variables: ['Month', 'Year', 'Total Revenue', 'Income Tax', 'VAT', 'Excise Duty', 'Import Duty', 'Licenses & Fees', 'Other'],
-    format: 'Excel (.xlsx)',
-    price: 35,
-  },
-  {
-    id: 'fuel-prices',
-    title: 'Fuel Prices Retail (2010–2025)',
-    description: 'Weekly retail prices for petrol, diesel, and kerosene. Cleaned from Energy & Petroleum Regulatory Authority.',
-    category: 'Inflation & Prices',
-    coverage: 'Weekly, 2010–2025 (780 data points)',
-    variables: ['Week', 'Date', 'Petrol (KES/litre)', 'Diesel (KES/litre)', 'Kerosene (KES/litre)'],
-    format: 'Excel (.xlsx)',
-    price: 20,
-  },
-  {
-    id: 'exchange-rate',
-    title: 'KES/USD Exchange Rate (2000–2025)',
-    description: 'Daily, monthly, and annual average exchange rates. Central Bank of Kenya official rates.',
-    category: 'Monetary',
-    coverage: 'Daily, 2000–2025 (9,000+ data points)',
-    variables: ['Date', 'Daily Rate', 'Monthly Average', 'Annual Average'],
-    format: 'Excel (.xlsx)',
-    price: 25,
-  },
-];
-
-const BUNDLES = [
-  {
-    id: 'inflation-bundle',
-    name: 'Kenya Inflation Pack',
-    description: 'CPI + Fuel Prices + Exchange Rate',
-    datasets: ['cpi-monthly', 'fuel-prices', 'exchange-rate'],
-    regularPrice: 70,
-    bundlePrice: 55,
-    savings: '21%',
-  },
-  {
-    id: 'labour-bundle',
-    name: 'Kenya Labour Market Pack',
-    description: 'Employment + Unemployment + Population',
-    datasets: ['unemployment-labour', 'population-county'],
-    regularPrice: 50,
-    bundlePrice: 40,
-    savings: '20%',
-  },
-  {
-    id: 'fiscal-bundle',
-    name: 'Kenya Public Finance Pack',
-    description: 'Government Revenue + Selected Economic Indicators',
-    datasets: ['government-revenue', 'cpi-monthly'],
-    regularPrice: 60,
-    bundlePrice: 48,
-    savings: '20%',
-  },
-];
+import { useEffect, useState } from 'react';
+import { sanityFetch } from '@/lib/sanity.client';
+import { ALL_DATASETS_QUERY, ALL_DATASET_BUNDLES_QUERY, DATA_SETTINGS_QUERY } from '@/lib/sanity.queries';
+import { Dataset, DatasetBundle, DataSettings } from '@/lib/sanity.types';
 
 export default function DataPage() {
-  const [selectedDataset, setSelectedDataset] = useState<string | null>(null);
-  const [requestForm, setRequestForm] = useState({ name: '', email: '', dataset: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const [datasets, setDatasets] = useState<Dataset[]>([]);
+  const [bundles, setBundles] = useState<DatasetBundle[]>([]);
+  const [settings, setSettings] = useState<DataSettings | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const handleRequestSubmit = (e: React.FormEvent, datasetId: string) => {
-    e.preventDefault();
-    const dataset = DATASETS.find(d => d.id === datasetId);
-    if (!requestForm.name || !requestForm.email) {
-      alert('Please fill in all fields');
-      return;
-    }
-    
-    // Create mailto link with request details
-    const subject = `Data Request: ${dataset?.title}`;
-    const body = `Name: ${requestForm.name}\nEmail: ${requestForm.email}\nDataset: ${dataset?.title}\n\nPlease send me this dataset.`;
-    const mailtoLink = `mailto:omukokookoth@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setRequestForm({ name: '', email: '', dataset: '' });
-    }, 3000);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [datasetsData, bundlesData, settingsData] = await Promise.all([
+          sanityFetch<Dataset[]>({ query: ALL_DATASETS_QUERY }),
+          sanityFetch<DatasetBundle[]>({ query: ALL_DATASET_BUNDLES_QUERY }),
+          sanityFetch<DataSettings>({ query: DATA_SETTINGS_QUERY }),
+        ]);
+        setDatasets(datasetsData || []);
+        setBundles(bundlesData || []);
+        setSettings(settingsData);
+      } catch (error) {
+        console.error('Failed to fetch data page content:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#faf8f3] flex items-center justify-center">
+        <div className="text-[#5a6b7a]">Loading...</div>
+      </div>
+    );
+  }
+
+  const pageTitle = settings?.pageTitle || 'Kenya Data Store';
+  const pageDescription = settings?.pageDescription || 'Official KNBS data, cleaned and structured for immediate use';
+  const pageIntro = settings?.pageIntro || '';
+  const audiences = settings?.audiences || [];
+  const approachItems = settings?.dataStandardsApproach || [];
+  const dontItems = settings?.dataStandardsDont || [];
+  const legalNotice = settings?.legalNotice || '';
+  const ctaHeadline = settings?.ctaHeadline || 'Ready to access Kenya''s data';
+  const ctaDescription = settings?.ctaDescription || '';
 
   return (
     <div className="min-h-screen bg-[#faf8f3]">
@@ -143,109 +59,114 @@ export default function DataPage() {
           <div className="mb-6">
             <span className="text-sm font-semibold text-amber-600 tracking-wide">DATASETS</span>
           </div>
-          <h1 className="font-serif text-5xl font-light text-[#1a2847] mb-6 leading-tight">Kenya Data Store</h1>
+          <h1 className="font-serif text-5xl font-light text-[#1a2847] mb-6 leading-tight">{pageTitle}</h1>
           <p className="text-xl text-[#5a6b7a] mb-6 font-light">
-            Official KNBS data, cleaned and structured for immediate use
+            {pageDescription}
           </p>
-          <p className="text-lg text-[#1a2847] mb-8 leading-relaxed">
-            Download cleaned Excel files for research, analysis, and journalism. All datasets are sourced from Kenya's National Bureau of Statistics with standardized formatting, proper documentation, and clear variable definitions.
-          </p>
+          {pageIntro && (
+            <p className="text-lg text-[#1a2847] mb-8 leading-relaxed">
+              {pageIntro}
+            </p>
+          )}
         </div>
       </section>
 
-      {/* Who It's For */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
-        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Prepared for all users</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {[
-            { title: 'Academic Researchers', description: 'Clean datasets for empirical analysis, econometric modeling, and publishable research' },
-            { title: 'Policy Makers', description: 'Reliable data for evidence-based policy decisions and government strategy' },
-            { title: 'Journalists', description: 'Verified data for investigations, fact-checking, and economic reporting' },
-            { title: 'Data Analysts', description: 'Merged time series and consistent methodologies for modeling and forecasting' },
-            { title: 'Students', description: 'Ready-to-use datasets for academic projects, theses, and coursework' },
-            { title: 'Businesses', description: 'Market data and economic indicators for strategic planning and risk analysis' },
-          ].map((item) => (
-            <div key={item.title}>
-              <h3 className="font-serif text-lg text-[#1a2847] mb-3">{item.title}</h3>
-              <p className="text-[#5a6b7a] leading-relaxed">{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Audiences Section */}
+      {audiences && audiences.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+          <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Prepared for all users</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {audiences.map((audience, idx) => (
+              <div key={idx}>
+                <h3 className="font-serif text-lg text-[#1a2847] mb-3">{audience.title}</h3>
+                <p className="text-[#5a6b7a] leading-relaxed">{audience.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Datasets */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
-        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Available datasets</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {DATASETS.map((dataset) => (
-            <div key={dataset.id} className="border border-[#e8e4db] rounded-lg p-8 bg-white hover:border-amber-600/30 hover:shadow-md transition-all">
-              <div className="mb-4">
-                <span className="text-xs font-semibold text-amber-600 tracking-wide">{dataset.category}</span>
-              </div>
-              <h3 className="font-serif text-xl font-light text-[#1a2847] mb-4">{dataset.title}</h3>
-              <p className="text-[#5a6b7a] mb-6">{dataset.description}</p>
+      {datasets.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+          <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Available datasets</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {datasets.map((dataset) => (
+              <div key={dataset._id} className="border border-[#e8e4db] rounded-lg p-8 bg-white hover:border-amber-600/30 hover:shadow-md transition-all">
+                <div className="mb-4">
+                  <span className="text-xs font-semibold text-amber-600 tracking-wide">{dataset.category}</span>
+                </div>
+                <h3 className="font-serif text-xl font-light text-[#1a2847] mb-4">{dataset.title}</h3>
+                <p className="text-[#5a6b7a] mb-6">{dataset.description}</p>
 
-              <div className="mb-6 pb-6 border-t border-[#e8e4db] pt-6">
-                <p className="text-sm font-semibold text-[#1a2847] mb-1">Coverage</p>
-                <p className="text-sm text-[#5a6b7a]">{dataset.coverage}</p>
-              </div>
+                {dataset.coverage && (
+                  <div className="mb-6 pb-6 border-t border-[#e8e4db] pt-6">
+                    <p className="text-sm font-semibold text-[#1a2847] mb-1">Coverage</p>
+                    <p className="text-sm text-[#5a6b7a]">{dataset.coverage}</p>
+                  </div>
+                )}
 
-              <div className="mb-6 pb-6 border-b border-[#e8e4db]">
-                <p className="text-sm font-semibold text-[#1a2847] mb-3">Variables</p>
-                <div className="text-sm text-[#5a6b7a] space-y-2">
-                  {dataset.variables.slice(0, 4).map((v, idx) => (
-                    <div key={idx}>{v}</div>
-                  ))}
-                  {dataset.variables.length > 4 && (
-                    <div className="text-[#5a6b7a]">+ {dataset.variables.length - 4} more</div>
-                  )}
+                {dataset.variables && dataset.variables.length > 0 && (
+                  <div className="mb-6 pb-6 border-b border-[#e8e4db]">
+                    <p className="text-sm font-semibold text-[#1a2847] mb-3">Variables</p>
+                    <div className="text-sm text-[#5a6b7a] space-y-2">
+                      {dataset.variables.slice(0, 4).map((v, idx) => (
+                        <div key={idx}>{v}</div>
+                      ))}
+                      {dataset.variables.length > 4 && (
+                        <div className="text-[#5a6b7a]">+ {dataset.variables.length - 4} more</div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex justify-between items-end">
+                  <div>
+                    {dataset.format && <p className="text-xs text-[#5a6b7a] mb-1">{dataset.format}</p>}
+                    <p className="font-serif text-2xl font-light text-[#1a2847]">KES {dataset.price}</p>
+                  </div>
+                  <button className="px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium text-sm transition-colors">
+                    Request
+                  </button>
                 </div>
               </div>
-
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-xs text-[#5a6b7a] mb-1">{dataset.format}</p>
-                  <p className="font-serif text-2xl font-light text-[#1a2847]">KES {dataset.price}</p>
-                </div>
-                <button
-                  onClick={() => setSelectedDataset(dataset.id)}
-                  className="px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium text-sm transition-colors"
-                >
-                  Request
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Bundles */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
-        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Save with bundles</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {BUNDLES.map((bundle) => (
-            <div key={bundle.id} className="border border-amber-600/40 rounded-lg p-8 bg-white relative hover:border-amber-600 transition-all">
-              <div className="absolute top-6 right-6 bg-amber-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                Save {bundle.savings}
-              </div>
-              <h3 className="font-serif text-lg text-[#1a2847] mb-2 mt-4">{bundle.name}</h3>
-              <p className="text-sm text-[#5a6b7a] mb-6">{bundle.description}</p>
+      {bundles.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+          <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Save with bundles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {bundles.map((bundle) => {
+              const savings = Math.round(((bundle.regularPrice - bundle.bundlePrice) / bundle.regularPrice) * 100);
+              return (
+                <div key={bundle._id} className="border border-amber-600/40 rounded-lg p-8 bg-white relative hover:border-amber-600 transition-all">
+                  <div className="absolute top-6 right-6 bg-amber-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                    Save {savings}%
+                  </div>
+                  <h3 className="font-serif text-lg text-[#1a2847] mb-2 mt-4">{bundle.name}</h3>
+                  {bundle.description && <p className="text-sm text-[#5a6b7a] mb-6">{bundle.description}</p>}
 
-              <div className="mb-8 pb-8 border-b border-[#e8e4db]">
-                <p className="text-xs text-[#5a6b7a] tracking-wide mb-2">PRICING</p>
-                <div className="flex items-baseline gap-3">
-                  <span className="line-through text-[#5a6b7a] text-sm">KES {bundle.regularPrice}</span>
-                  <span className="font-serif text-2xl font-light text-amber-600">KES {bundle.bundlePrice}</span>
+                  <div className="mb-8 pb-8 border-b border-[#e8e4db]">
+                    <p className="text-xs text-[#5a6b7a] tracking-wide mb-2">PRICING</p>
+                    <div className="flex items-baseline gap-3">
+                      <span className="line-through text-[#5a6b7a] text-sm">KES {bundle.regularPrice}</span>
+                      <span className="font-serif text-2xl font-light text-amber-600">KES {bundle.bundlePrice}</span>
+                    </div>
+                  </div>
+
+                  <button className="w-full px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium transition-colors">
+                    Request Bundle
+                  </button>
                 </div>
-              </div>
-
-              <button className="w-full px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium transition-colors">
-                Request Bundle
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* How It Works */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
@@ -266,93 +187,60 @@ export default function DataPage() {
         </div>
       </section>
 
-      {/* Data Quality */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
-        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Data standards</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h3 className="font-serif text-lg text-[#1a2847] mb-6">Our approach</h3>
-            <ul className="space-y-4 text-[#5a6b7a]">
-              <li className="flex gap-3">
-                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
-                <span>Download official KNBS data directly</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
-                <span>Remove duplicates and inconsistencies</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
-                <span>Standardize column names and data types</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
-                <span>Verify completeness and data integrity</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
-                <span>Document all variables and definitions</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
-                <span>Include methodology and data notes</span>
-              </li>
-            </ul>
+      {/* Data Standards */}
+      {(approachItems.length > 0 || dontItems.length > 0) && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+          <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Data standards</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {approachItems.length > 0 && (
+              <div>
+                <h3 className="font-serif text-lg text-[#1a2847] mb-6">Our approach</h3>
+                <ul className="space-y-4 text-[#5a6b7a]">
+                  {approachItems.map((item, idx) => (
+                    <li key={idx} className="flex gap-3">
+                      <span className="text-amber-600 font-semibold flex-shrink-0"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {dontItems.length > 0 && (
+              <div>
+                <h3 className="font-serif text-lg text-[#1a2847] mb-6">What we don''t do</h3>
+                <ul className="space-y-4 text-[#5a6b7a]">
+                  {dontItems.map((item, idx) => (
+                    <li key={idx} className="flex gap-3">
+                      <span className="text-[#5a6b7a] font-semibold flex-shrink-0"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-          <div>
-            <h3 className="font-serif text-lg text-[#1a2847] mb-6">What we don't do</h3>
-            <ul className="space-y-4 text-[#5a6b7a]">
-              <li className="flex gap-3">
-                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
-                <span>Alter underlying data values</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
-                <span>Add interpretations or projections</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
-                <span>Sell proprietary analysis</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
-                <span>Claim ownership of public data</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
-                <span>Remove source attribution</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
-                <span>Guarantee data completeness</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Legal Notice */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
-        <h3 className="font-serif text-lg text-[#1a2847] mb-6">Legal notice</h3>
-        <div className="max-w-3xl space-y-4 text-[#5a6b7a]">
-          <p>
-            All data provided is sourced from the <strong className="text-[#1a2847]">Kenya National Bureau of Statistics</strong> and is in the public domain. LeadAfrik provides value through data cleaning, standardization, and documentation only.
-          </p>
-          <p>
-            By requesting our datasets, you agree to use them for educational, analytical, research, and journalistic purposes consistent with KNBS terms and conditions.
-          </p>
-          <p className="text-sm pt-4 border-t border-[#e8e4db]">
-            Questions about these datasets or custom extractions? Contact <a href="mailto:omukokookoth@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium">omukokookoth@gmail.com</a>
-          </p>
-        </div>
-      </section>
+      {legalNotice && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+          <h3 className="font-serif text-lg text-[#1a2847] mb-6">Legal notice</h3>
+          <div className="max-w-3xl space-y-4 text-[#5a6b7a]">
+            <p>{legalNotice}</p>
+            <p className="text-sm pt-4 border-t border-[#e8e4db]">
+              Questions about these datasets or custom extractions? Contact <a href="mailto:omukokookoth@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium">omukokookoth@gmail.com</a>
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="max-w-2xl">
-          <h2 className="font-serif text-4xl font-light text-[#1a2847] mb-6">Ready to access Kenya's data</h2>
+          <h2 className="font-serif text-4xl font-light text-[#1a2847] mb-6">{ctaHeadline}</h2>
           <p className="text-lg text-[#5a6b7a] mb-8">
-            Select a dataset above and submit your request. You'll receive an invoice within one business day.
+            {ctaDescription}
           </p>
           <p className="text-[#5a6b7a]">
             Looking for a custom extraction or specific data not listed here? <a href="mailto:omukokookoth@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium">Get in touch with us</a>

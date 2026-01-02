@@ -198,3 +198,44 @@ export const LEARN_SETTINGS_QUERY = `
     instructions,
   }
 `
+
+export const ALL_DATASETS_QUERY = `
+  *[_type == "dataset"] | order(order asc) {
+    _id,
+    title,
+    category,
+    description,
+    coverage,
+    variables,
+    format,
+    price,
+    order,
+  }
+`
+
+export const ALL_DATASET_BUNDLES_QUERY = `
+  *[_type == "datasetBundle"] | order(order asc) {
+    _id,
+    name,
+    description,
+    datasets[]->,
+    regularPrice,
+    bundlePrice,
+    order,
+  }
+`
+
+export const DATA_SETTINGS_QUERY = `
+  *[_type == "dataSettings"][0] {
+    _id,
+    pageTitle,
+    pageDescription,
+    pageIntro,
+    audiences,
+    dataStandardsApproach,
+    dataStandardsDont,
+    legalNotice,
+    ctaHeadline,
+    ctaDescription,
+  }
+`

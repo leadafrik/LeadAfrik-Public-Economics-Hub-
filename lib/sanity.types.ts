@@ -146,6 +146,44 @@ export interface LearnSettings {
   }>
 }
 
+export interface Dataset {
+  _id: string
+  title: string
+  category: string
+  description: string
+  coverage?: string
+  variables?: string[]
+  format?: string
+  price: number
+  order?: number
+}
+
+export interface DatasetBundle {
+  _id: string
+  name: string
+  description?: string
+  datasets: Dataset[]
+  regularPrice: number
+  bundlePrice: number
+  order?: number
+}
+
+export interface DataSettings {
+  _id: string
+  pageTitle: string
+  pageDescription: string
+  pageIntro: string
+  audiences?: Array<{
+    title: string
+    description: string
+  }>
+  dataStandardsApproach?: string[]
+  dataStandardsDont?: string[]
+  legalNotice: string
+  ctaHeadline: string
+  ctaDescription: string
+}
+
 export interface AboutSettings {
   _id: string
   hubTitle: string
