@@ -16,45 +16,71 @@ export default function PostCard({ post }: PostCardProps) {
   const tags = post.tags || [];
   const type = post.type;
   const publishedAt = post.publishedAt;
-  const authorName = isPost(post) ? post.author : post.author?.name || 'Anonymous';
+  const authorName = isPost(post) ? post.author : post.author?.name || 'LeadAfrik';
   const featured = post.featured || false;
+  const content = isPost(post) ? post.content : '';
+  const readingTime = content ? Math.ceil(content.split(/\s+/).length / 200) : 5;
 
   return (
-    <article className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">
-            <Link href={`/blog/${slug}`} className="hover:text-blue-600">
-              {title}
-            </Link>
-          </h3>
-          <p className="text-sm text-gray-600 mb-2">{excerpt}</p>
-        </div>
+    <article className="border border-gray-200/60 rounded-lg p-8 hover:shadow-lg hover:border-gold transition-all duration-200 bg-white">
+      {/* Featured Badge + Meta */}
+      <div className="flex items-center gap-3 mb-6">
+        <span className="inline-block px-3 py-1 bg-gray-100 text-xs font-semibold uppercase tracking-wide text-gray-700 rounded-sm">
+          {BLOG_TYPES[type as keyof typeof BLOG_TYPES] || type || 'Article'}
+        </span>
+        {readingTime > 0 && (
+          <span className="text-xs text-gray-600 font-medium">
+            {readingTime} min read
+          </span>
+        )}
         {featured && (
-          <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded whitespace-nowrap ml-4">
+          <span className="ml-auto px-3 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-sm">
             Featured
           </span>
         )}
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-4">
-        <span className="text-xs bg-blue-50 text-blue-700 px-3 py-1 rounded">
-          {BLOG_TYPES[type as keyof typeof BLOG_TYPES] || type}
+      {/* Headline */}
+      <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4 leading-tight">
+        <Link href={`/blog/${slug}`} className="hover:text-gold transition-colors">
+          {title}
+        </Link>
+      </h3>
+
+      {/* Excerpt */}
+      {excerpt && (
+        <p className="text-gray-700 mb-6 leading-relaxed line-clamp-2 font-serif">
+          {excerpt}
+        </p>
+      )}
+
+      {/* Metadata Row */}
+      <div className="flex items-center gap-4 text-xs text-gray-600 font-medium uppercase tracking-wide border-t border-gray-100 pt-6 mb-6">
+        <span>
+          By <span className="text-gray-900 font-semibold">{authorName}</span>
         </span>
-        {tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded"
-          >
-            {tag}
-          </span>
-        ))}
+        <span>
+          {new Date(publishedAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </span>
       </div>
 
-      <div className="flex justify-between items-center text-xs text-gray-500">
-        <span>By {authorName}</span>
-        <span>{new Date(publishedAt).toLocaleDateString()}</span>
-      </div>
+      {/* Tags */}
+      {tags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {tags.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className="px-2 py-1 text-xs text-gray-600 border border-gray-200 rounded-sm hover:border-gold transition-colors"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
     </article>
   );
 }

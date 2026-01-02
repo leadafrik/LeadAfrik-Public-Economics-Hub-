@@ -8,70 +8,80 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { href: "/blog", label: "Blog" },
+    { href: "/blog", label: "Analysis" },
     { href: "/documents", label: "Documents" },
-    { href: "/snapshot", label: "Snapshot" },
     { href: "/data", label: "Data" },
+    { href: "/snapshot", label: "Snapshot" },
     { href: "/learn", label: "Learn" },
     { href: "/podcast", label: "Podcast" },
     { href: "/about", label: "About" },
   ];
 
   return (
-    <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
-      <nav className="max-w-6xl mx-auto px-6 py-8">
-        <div className="flex justify-between items-center">
-          {/* Wordmark */}
-          <Link
-            href="/"
-            className="text-xl font-semibold tracking-tight text-gray-900 hover:text-blue-600 transition-colors"
-          >
-            {SITE_NAME}
+    <header className="border-b border-current/10 bg-white sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Masthead */}
+        <div className="py-12 border-b border-current/10">
+          <Link href="/" className="block">
+            <p className="text-xs font-semibold tracking-widest text-gray-700 uppercase mb-2">
+              LeadAfrik
+            </p>
+            <h1 className="text-2xl font-serif font-bold text-gray-900">
+              {SITE_NAME}
+            </h1>
+            <p className="text-sm text-gray-600 font-serif italic mt-2">
+              Kenya's economic policy, explained clearly
+            </p>
           </Link>
-
-          {/* Desktop Navigation Links */}
-          <ul className="hidden md:flex gap-12 items-center text-sm text-gray-600">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="hover:text-gray-900 transition-colors"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-gray-600 text-lg hover:text-gray-900 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? "✕" : "☰"}
-          </button>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 mt-4 pt-4">
-            <ul className="flex flex-col gap-4 text-sm text-gray-600">
+        {/* Navigation */}
+        <nav className="py-6">
+          <div className="flex justify-between items-center">
+            {/* Desktop Navigation Links */}
+            <ul className="hidden md:flex gap-8 items-center text-sm font-medium text-gray-700">
               {navItems.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="hover:text-gray-900 transition-colors block"
-                    onClick={() => setMobileMenuOpen(false)}
+                    className="hover:text-gray-900 hover:border-b-2 border-gold transition-colors pb-1"
                   >
                     {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-gray-700 text-lg hover:text-gray-900 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? "✕" : "☰"}
+            </button>
           </div>
-        )}
-      </nav>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden border-t border-current/10 mt-6 pt-6">
+              <ul className="flex flex-col gap-4 text-sm font-medium text-gray-700">
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="hover:text-gray-900 transition-colors block py-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </nav>
+      </div>
     </header>
   );
 }
