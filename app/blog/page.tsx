@@ -3,6 +3,7 @@ import PostCard from "@/components/PostCard";
 import { sanityFetch } from "@/lib/sanity.client";
 import { ALL_POSTS_QUERY } from "@/lib/sanity.queries";
 import { SanityPost } from "@/lib/sanity.types";
+import ClientSearchBlog from "@/components/ClientSearchBlog";
 
 export default async function BlogPage() {
   const posts = await sanityFetch<SanityPost[]>({ query: ALL_POSTS_QUERY });
@@ -17,23 +18,7 @@ export default async function BlogPage() {
           </p>
         </div>
 
-        <div className="mb-12">
-          <input
-            type="text"
-            placeholder="Search posts..."
-            className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-blue-600 transition-colors"
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {posts && posts.length > 0 ? (
-            posts.map((post) => (
-              <PostCard key={post._id} post={post} />
-            ))
-          ) : (
-            <p className="text-gray-600">No posts yet. Check back soon.</p>
-          )}
-        </div>
+        <ClientSearchBlog posts={posts || []} />
       </section>
     </div>
   );

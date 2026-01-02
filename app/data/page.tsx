@@ -48,7 +48,7 @@ export default function DataPage() {
   const approachItems = settings?.dataStandardsApproach || [];
   const dontItems = settings?.dataStandardsDont || [];
   const legalNotice = settings?.legalNotice || '';
-  const ctaHeadline = settings?.ctaHeadline || 'Ready to access Kenya''s data';
+  const ctaHeadline = settings?.ctaHeadline || "Ready to access Kenya's data";
   const ctaDescription = settings?.ctaDescription || '';
 
   return (

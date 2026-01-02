@@ -1,11 +1,64 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { sanityFetch } from "@/lib/sanity.client";
 import { SINGLE_POST_QUERY } from "@/lib/sanity.queries";
 import { SanityPost } from "@/lib/sanity.types";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import { generateArticleSchema } from "@/lib/seo";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const post = await sanityFetch<SanityPost>({
+    query: SINGLE_POST_QUERY,
+    params: { slug },
+  });
+
+  if (!post) {
+    return {
+      title: "Post not found",
+    };
+  }
+
+  const imageUrl = post.image?.asset?.url || `${SITE_URL}/og-image.png`;
+  const postUrl = `${SITE_URL}/blog/${slug}`;
+
+  return {
+    title: post.title,
+    description: post.excerpt || post.title,
+    authors: post.author ? [{ name: post.author.name }] : undefined,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || post.title,
+      type: "article",
+      url: postUrl,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+      publishedTime: post.publishedAt,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt || post.title,
+      images: [imageUrl],
+    },
+    alternates: {
+      canonical: postUrl,
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -20,8 +73,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  const imageUrl = post.image?.asset?.url;
+  const structuredData = generateArticleSchema({
+    title: post.title,
+    excerpt: post.excerpt || '',
+    publishedAt: new Date(post.publishedAt).toISOString(),
+    author: post.author ? { name: post.author.name } : { name: 'LeadAfrik' },
+    slug: post.slug.current,
+    imageUrl: imageUrl,
+  });
+
   return (
     <div className="bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
       <article className="max-w-3xl mx-auto px-6 py-16">
         <Link href="/blog" className="text-blue-600 hover:text-blue-700 mb-8 inline-block">
           ← Back to blog

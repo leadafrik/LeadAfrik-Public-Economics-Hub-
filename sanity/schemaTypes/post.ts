@@ -29,6 +29,15 @@ export default defineType({
       validation: (Rule) => Rule.max(300),
     }),
     defineField({
+      name: 'image',
+      title: 'Featured Image',
+      type: 'image',
+      description: 'Main article image for cards and social sharing',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: 'content',
       title: 'Content',
       type: 'text',

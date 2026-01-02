@@ -1,14 +1,56 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { sanityFetch } from "@/lib/sanity.client";
 import { SINGLE_EPISODE_QUERY } from "@/lib/sanity.queries";
 import { SanityEpisode } from "@/lib/sanity.types";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
+
+interface EpisodeDetailPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: EpisodeDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const episode = await sanityFetch<SanityEpisode>({
+    query: SINGLE_EPISODE_QUERY,
+    params: { slug },
+  });
+
+  if (!episode) {
+    return {
+      title: "Episode not found",
+    };
+  }
+
+  const episodeUrl = `${SITE_URL}/podcast/${slug}`;
+
+  return {
+    title: `${episode.title} - ${SITE_NAME}`,
+    description: episode.summary || episode.title,
+    openGraph: {
+      title: episode.title,
+      description: episode.summary || episode.title,
+      type: "video.episode",
+      url: episodeUrl,
+    },
+    twitter: {
+      card: "summary",
+      title: episode.title,
+      description: episode.summary || episode.title,
+    },
+    alternates: {
+      canonical: episodeUrl,
+    },
+  };
+}
 
 export default async function EpisodeDetailPage({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+}: EpisodeDetailPageProps) {
   const { slug } = await params;
   const episode = await sanityFetch<SanityEpisode>({
     query: SINGLE_EPISODE_QUERY,

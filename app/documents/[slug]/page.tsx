@@ -1,11 +1,52 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { sanityFetch } from "@/lib/sanity.client";
 import { SINGLE_DOCUMENT_QUERY } from "@/lib/sanity.queries";
 import { SanityDocument } from "@/lib/sanity.types";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
 
 interface DocumentDetailPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: DocumentDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const doc = await sanityFetch<SanityDocument>({
+    query: SINGLE_DOCUMENT_QUERY,
+    params: { slug },
+  });
+
+  if (!doc) {
+    return {
+      title: "Document not found",
+    };
+  }
+
+  const docUrl = `${SITE_URL}/documents/${slug}`;
+  const description = `${doc.title} | ${doc.institution} (${doc.year})`;
+
+  return {
+    title: `${doc.title} - ${SITE_NAME}`,
+    description: description,
+    openGraph: {
+      title: doc.title,
+      description: description,
+      type: "article",
+      url: docUrl,
+    },
+    twitter: {
+      card: "summary",
+      title: doc.title,
+      description: description,
+    },
+    alternates: {
+      canonical: docUrl,
+    },
+  };
 }
 
 export default async function DocumentDetailPage({ params }: DocumentDetailPageProps) {

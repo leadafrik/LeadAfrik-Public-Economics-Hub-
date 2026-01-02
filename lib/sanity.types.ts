@@ -33,6 +33,24 @@ export interface SanityPost {
   title: string
   slug: {current: string}
   excerpt?: string
+  image?: {
+    asset: {
+      _id: string
+      url: string
+    }
+    hotspot?: {
+      x: number
+      y: number
+      height: number
+      width: number
+    }
+    crop?: {
+      top: number
+      bottom: number
+      left: number
+      right: number
+    }
+  }
   content: string
   author?: SanityAuthor
   publishedAt: string

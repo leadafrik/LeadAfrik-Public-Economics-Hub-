@@ -6,6 +6,7 @@ export function generateArticleSchema(post: {
   publishedAt: string;
   author?: { name: string };
   slug: string;
+  imageUrl?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -29,6 +30,12 @@ export function generateArticleSchema(post: {
       "@type": "WebPage",
       "@id": `https://leadafrik.com/blog/${post.slug}`,
     },
+    ...(post.imageUrl && {
+      image: {
+        "@type": "ImageObject",
+        url: post.imageUrl,
+      },
+    }),
   };
 }
 
