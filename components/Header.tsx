@@ -21,22 +21,22 @@ export default function Header() {
     <header className="border-b border-current/10 bg-white sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-6">
         {/* Masthead */}
-        <div className="py-12 border-b border-current/10">
+        <div className="py-6 border-b border-current/10">
           <Link href="/" className="block">
-            <p className="text-xs font-semibold tracking-widest text-gray-700 uppercase mb-2">
+            <p className="text-xs font-semibold tracking-widest text-gray-700 uppercase mb-1">
               LeadAfrik
             </p>
             <div className="text-2xl font-serif font-bold text-gray-900">
               {SITE_NAME}
             </div>
-            <p className="text-sm text-gray-600 font-serif italic mt-2">
+            <p className="text-xs text-gray-600 font-serif italic mt-1">
               Kenya's economic policy, explained clearly
             </p>
           </Link>
         </div>
 
         {/* Navigation */}
-        <nav className="py-6">
+        <nav className="py-4">
           <div className="flex justify-between items-center">
             {/* Desktop Navigation Links */}
             <ul className="hidden md:flex gap-8 items-center text-sm font-medium text-gray-700">
