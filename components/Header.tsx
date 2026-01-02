@@ -52,6 +52,14 @@ export default function Header() {
               ))}
             </ul>
 
+            {/* Desktop CTA Button */}
+            <Link
+              href="/contribute"
+              className="hidden md:inline-block px-6 py-2 bg-amber-600 text-white text-sm font-semibold rounded hover:bg-amber-700 transition-colors"
+            >
+              Submit Analysis
+            </Link>
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -77,6 +85,15 @@ export default function Header() {
                     </Link>
                   </li>
                 ))}
+                <li className="pt-4 border-t border-current/10">
+                  <Link
+                    href="/contribute"
+                    className="block px-4 py-2 bg-amber-600 text-white text-sm font-semibold rounded hover:bg-amber-700 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Submit Analysis
+                  </Link>
+                </li>
               </ul>
             </div>
           )}
