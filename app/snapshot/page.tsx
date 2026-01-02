@@ -7,40 +7,40 @@ export default async function SnapshotPage() {
 
   if (!snapshot) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="bg-white min-h-screen flex items-center justify-center">
         <p className="text-gray-600">No snapshot data available yet.</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="bg-white">
+      <section className="max-w-6xl mx-auto px-6 py-24">
         <header className="mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl font-light text-gray-900 mb-4">
             Kenya Economy Snapshot
           </h1>
-          <p className="text-lg text-gray-600 mb-4">
+          <p className="text-lg text-gray-600 font-serif mb-4">
             Key economic indicators updated regularly.
           </p>
-          <p className="text-sm font-semibold text-gray-700">
-            Latest Update: {snapshot.dateRange}
+          <p className="text-sm text-gray-600">
+            Latest: {snapshot.dateRange}
           </p>
         </header>
 
         {/* Key Indicators */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">Key Indicators</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <h2 className="text-2xl font-light text-gray-900 mb-8">Key Indicators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {snapshot.indicators.map((indicator, idx) => (
-              <div key={idx} className="border border-gray-200 rounded-lg p-6 bg-white">
-                <p className="text-sm text-gray-600 mb-2">{indicator.name}</p>
-                <p className="text-3xl font-bold text-gray-900 mb-2">
+              <div key={idx} className="border-b border-gray-200 pb-6">
+                <p className="text-xs text-gray-600 mb-2 uppercase tracking-widest">{indicator.name}</p>
+                <p className="text-4xl font-light text-gray-900 mb-2">
                   {indicator.value}
                 </p>
                 {indicator.change && (
                   <p
-                    className={`text-sm font-semibold ${
+                    className={`text-sm ${
                       indicator.change.includes("↓")
                         ? "text-green-600"
                         : indicator.change.includes("↑")
