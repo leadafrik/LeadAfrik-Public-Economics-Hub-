@@ -115,10 +115,25 @@ export default function DataPage() {
 
   const handleRequestSubmit = (e: React.FormEvent, datasetId: string) => {
     e.preventDefault();
-    setRequestForm({ ...requestForm, dataset: datasetId });
-    // In production, this would send to your backend or email service
+    const dataset = DATASETS.find(d => d.id === datasetId);
+    if (!requestForm.name || !requestForm.email) {
+      alert('Please fill in all fields');
+      return;
+    }
+    
+    // Create mailto link with request details
+    const subject = `Data Request: ${dataset?.title}`;
+    const body = `Name: ${requestForm.name}\nEmail: ${requestForm.email}\nDataset: ${dataset?.title}\n\nPlease send me this dataset.`;
+    const mailtoLink = `mailto:omukokookoth@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setTimeout(() => {
+      setSubmitted(false);
+      setRequestForm({ name: '', email: '', dataset: '' });
+    }, 3000);
   };
 
   return (
@@ -293,7 +308,7 @@ export default function DataPage() {
           By purchasing our datasets, you agree to use them for educational, analytical, and journalistic purposes consistent with KNBS terms.
         </p>
         <p className="text-sm text-gray-600">
-          Questions? Contact us at <Link href="/contact" className="text-blue-600 hover:underline">contact@leadafrik.io</Link>
+          Questions? Contact us at <a href="mailto:omukokookoth@gmail.com" className="text-blue-600 hover:underline">omukokookoth@gmail.com</a>
         </p>
       </section>
 
@@ -304,7 +319,7 @@ export default function DataPage() {
           Pick a dataset above and submit your request. You'll receive an invoice within 24 hours.
         </p>
         <p className="text-gray-700">
-          Need a custom extraction or different data? <Link href="/contact" className="text-blue-600 hover:underline font-semibold">Contact us</Link>
+          Need a custom extraction or different data? <a href="mailto:omukokookoth@gmail.com" className="text-blue-600 hover:underline font-semibold">Contact us</a>
         </p>
       </section>
     </div>
