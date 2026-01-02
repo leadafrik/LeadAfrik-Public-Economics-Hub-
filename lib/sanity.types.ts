@@ -117,3 +117,33 @@ export interface HomeSettings {
   featuredDocument?: SanityDocument
   featuredEpisode?: SanityEpisode
 }
+
+export interface AboutSettings {
+  _id: string
+  hubTitle: string
+  hubDescription: any[]
+  founderName: string
+  founderTitle: string
+  founderBio: any[]
+  founderImage?: {
+    asset: {
+      _id: string
+      url: string
+    }
+    hotspot?: {
+      x: number
+      y: number
+      height: number
+      width: number
+    }
+    crop?: {
+      top: number
+      bottom: number
+      left: number
+      right: number
+    }
+  }
+  founderLinkedin?: string
+  founderEmail?: string
+}
+

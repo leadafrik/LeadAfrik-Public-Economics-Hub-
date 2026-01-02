@@ -143,3 +143,17 @@ export const FEATURED_POSTS_QUERY = `
     tags,
   }
 `
+
+export const ABOUT_SETTINGS_QUERY = `
+  *[_type == "aboutSettings"][0] {
+    _id,
+    hubTitle,
+    hubDescription,
+    founderName,
+    founderTitle,
+    founderBio,
+    founderImage,
+    founderLinkedin,
+    founderEmail,
+  }
+`

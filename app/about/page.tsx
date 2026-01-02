@@ -1,90 +1,136 @@
-import { AUTHOR } from "@/lib/constants";
+'use client';
+
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { sanityFetch } from '@/lib/sanity.client';
+import { ABOUT_SETTINGS_QUERY } from '@/lib/sanity.queries';
+import { AboutSettings } from '@/lib/sanity.types';
+import { PortableText } from 'next-sanity';
+
+const portableTextComponents = {
+  block: {
+    p: ({children}: any) => <p className="text-[#5a6b7a] leading-relaxed">{children}</p>,
+    h2: ({children}: any) => <h2 className="font-serif text-2xl text-[#1a2847] mt-6 mb-4">{children}</h2>,
+    h3: ({children}: any) => <h3 className="font-serif text-xl text-[#1a2847] mt-5 mb-3">{children}</h3>,
+  },
+  marks: {
+    strong: ({children}: any) => <strong className="font-semibold text-[#1a2847]">{children}</strong>,
+  },
+};
 
 export default function AboutPage() {
-  return (
-    <div className="min-h-screen bg-white">
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h1 className="text-4xl font-bold text-gray-900 mb-12">About</h1>
+  const [aboutData, setAboutData] = useState<AboutSettings | null>(null);
+  const [loading, setLoading] = useState(true);
 
-        {/* About the Hub */}
-        <div className="mb-16 pb-16 border-b border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">
-            LeadAfrik Public Economics Hub
-          </h2>
-          <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
-            <p>
-              LeadAfrik Public Economics Hub is a media and education platform focused on
-              Kenyan economic policy. We publish document summaries, explainers, and
-              data-informed analysis to help Kenyans understand how economic decisions
-              shape daily life - taxes, prices, public spending, debt, and devolution.
-            </p>
-            <p>
-              Our work prioritizes clarity, evidence, and context. Where possible, we link
-              directly to primary sources such as KNBS, CBK, National Treasury, Parliament,
-              and public research institutions.
-            </p>
-            <p>
-              We believe that public economics should be accessible. Policy decisions made
-              in parliament and treasury affect every Kenyan, yet remain opaque and
-              technical. We exist to change that.
-            </p>
-          </div>
+  useEffect(() => {
+    const fetchAbout = async () => {
+      try {
+        const data = await sanityFetch<AboutSettings>({
+          query: ABOUT_SETTINGS_QUERY,
+        });
+        setAboutData(data);
+      } catch (error) {
+        console.error('Failed to fetch about page:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAbout();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#faf8f3] flex items-center justify-center">
+        <div className="text-[#5a6b7a]">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!aboutData) {
+    return (
+      <div className="min-h-screen bg-[#faf8f3]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <p className="text-[#5a6b7a]">About page content not found.</p>
         </div>
+      </div>
+    );
+  }
 
-        {/* About Stephen */}
+  return (
+    <div className="min-h-screen bg-[#faf8f3]">
+      {/* Hero */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">About Stephen</h2>
-          <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
-            <p>
-              I'm <strong>Stephen Omukoko Okoth</strong>, an Oberlin College graduate with
-              a B.A. in <strong>Mathematical Economics (Honors)</strong>, a{" "}
-              <strong>Politics minor</strong>, and a <strong>Business concentration</strong>.
-            </p>
-            <p>
-              My academic work has focused on public economics and development outcomes,
-              including research on <strong>fiscal decentralization and neonatal/maternal
-              health outcomes in Kenya</strong>. I've also worked in fixed income through a
-              Morgan Stanley internship in New York, rotating across securitized products,
-              structured financing, and municipal/private lending.
-            </p>
-            <p>
-              I'm interested in public finance, political economy, and international
-              affairs - and in making economic policy understandable to everyday Kenyans.
-            </p>
-            <p>
-              <strong>Languages:</strong> English, Swahili
-              <br />
-              <strong>Tools:</strong> SQL, Stata, Excel, data visualization, and financial
-              analysis
-            </p>
+          <span className="text-sm font-semibold text-amber-600 tracking-wide">ABOUT</span>
+          <h1 className="font-serif text-5xl font-light text-[#1a2847] mt-2 mb-8">About us</h1>
+        </div>
+      </section>
+
+      {/* Hub Section */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-8">{aboutData.hubTitle}</h2>
+        <div className="space-y-6">
+          {aboutData.hubDescription && (
+            <PortableText value={aboutData.hubDescription} components={portableTextComponents} />
+          )}
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Founder Bio */}
+          <div className="lg:col-span-2">
+            <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-8">{aboutData.founderTitle}</h2>
+            <div className="space-y-6">
+              {aboutData.founderBio && (
+                <PortableText value={aboutData.founderBio} components={portableTextComponents} />
+              )}
+            </div>
+
+            {/* Social Links */}
+            {(aboutData.founderLinkedin || aboutData.founderEmail) && (
+              <div className="mt-10 pt-10 border-t border-[#e8e4db] flex flex-wrap gap-3">
+                {aboutData.founderLinkedin && (
+                  <a
+                    href={aboutData.founderLinkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium text-sm transition-colors"
+                  >
+                    LinkedIn
+                  </a>
+                )}
+                {aboutData.founderEmail && (
+                  <a
+                    href={`mailto:${aboutData.founderEmail}`}
+                    className="px-5 py-2 border border-[#e8e4db] text-[#1a2847] rounded-lg hover:border-amber-600 hover:text-amber-600 font-medium text-sm transition-colors"
+                  >
+                    Email
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
-          <div className="mt-12 flex flex-col sm:flex-row gap-4">
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold text-center"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 font-semibold text-center"
-            >
-              YouTube
-            </a>
-            <a
-              href="https://podcast.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 border-2 border-gray-300 text-gray-900 rounded-lg hover:bg-gray-50 font-semibold text-center"
-            >
-              Podcast
-            </a>
-          </div>
+          {/* Founder Image */}
+          {aboutData.founderImage?.asset?.url && (
+            <div className="lg:col-span-1">
+              <div className="sticky top-20">
+                <div className="relative aspect-[3/4] rounded-lg overflow-hidden border border-[#e8e4db]">
+                  <Image
+                    src={aboutData.founderImage.asset.url}
+                    alt={aboutData.founderName}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
+                </div>
+                <h3 className="font-serif text-lg text-[#1a2847] mt-6">{aboutData.founderName}</h3>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </div>
