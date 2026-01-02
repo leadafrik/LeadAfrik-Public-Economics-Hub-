@@ -12,7 +12,6 @@ interface Dataset {
   variables: string[];
   format: string;
   price: number;
-  preview?: string;
 }
 
 const DATASETS: Dataset[] = [
@@ -137,81 +136,80 @@ export default function DataPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#faf8f3]">
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-gray-200">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
         <div className="max-w-3xl">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Kenya Data Store</h1>
-          <p className="text-xl text-gray-600 mb-6">
-            KNBS data, cleaned, structured, and ready for analysis.
-          </p>
-          <p className="text-lg text-gray-700 mb-8">
-            Download cleaned datasets for research, analysis, and journalism. All data is sourced from Kenya's official statistics authority and prepared for immediate use.
-          </p>
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-4">
-            <p className="text-sm text-gray-700">
-              <strong>📊 What you get:</strong> Cleaned Excel files with standardized column names, proper units, and complete documentation. No more manual data cleaning.
-            </p>
+          <div className="mb-6">
+            <span className="text-sm font-semibold text-amber-600 tracking-wide">DATASETS</span>
           </div>
+          <h1 className="font-serif text-5xl font-light text-[#1a2847] mb-6 leading-tight">Kenya Data Store</h1>
+          <p className="text-xl text-[#5a6b7a] mb-6 font-light">
+            Official KNBS data, cleaned and structured for immediate use
+          </p>
+          <p className="text-lg text-[#1a2847] mb-8 leading-relaxed">
+            Download cleaned Excel files for research, analysis, and journalism. All datasets are sourced from Kenya's National Bureau of Statistics with standardized formatting, proper documentation, and clear variable definitions.
+          </p>
         </div>
       </section>
 
       {/* Who It's For */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-gray-200">
-        <h2 className="text-3xl font-bold text-gray-900 mb-12">Who Uses Our Data</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Prepared for all users</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {[
-            { icon: '👨‍🎓', title: 'Students', description: 'Ready-to-use datasets for projects and theses' },
-            { icon: '🔬', title: 'Researchers', description: 'Clean data for academic analysis and papers' },
-            { icon: '📰', title: 'Journalists', description: 'Verified data for investigations and reports' },
-            { icon: '🏛️', title: 'Policy Makers', description: 'Reliable data for evidence-based decisions' },
-            { icon: '📊', title: 'Analysts', description: 'Merged, consistent time series for modeling' },
-            { icon: '🏢', title: 'Businesses', description: 'Market data for strategy and planning' },
+            { title: 'Academic Researchers', description: 'Clean datasets for empirical analysis, econometric modeling, and publishable research' },
+            { title: 'Policy Makers', description: 'Reliable data for evidence-based policy decisions and government strategy' },
+            { title: 'Journalists', description: 'Verified data for investigations, fact-checking, and economic reporting' },
+            { title: 'Data Analysts', description: 'Merged time series and consistent methodologies for modeling and forecasting' },
+            { title: 'Students', description: 'Ready-to-use datasets for academic projects, theses, and coursework' },
+            { title: 'Businesses', description: 'Market data and economic indicators for strategic planning and risk analysis' },
           ].map((item) => (
-            <div key={item.title} className="text-center">
-              <p className="text-4xl mb-4">{item.icon}</p>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
-              <p className="text-gray-600">{item.description}</p>
+            <div key={item.title}>
+              <h3 className="font-serif text-lg text-[#1a2847] mb-3">{item.title}</h3>
+              <p className="text-[#5a6b7a] leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Datasets */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-gray-200">
-        <h2 className="text-3xl font-bold text-gray-900 mb-12">Available Datasets</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Available datasets</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {DATASETS.map((dataset) => (
-            <div key={dataset.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{dataset.title}</h3>
-              <p className="text-sm text-blue-600 font-semibold mb-3">{dataset.category}</p>
-              <p className="text-gray-700 mb-4">{dataset.description}</p>
+            <div key={dataset.id} className="border border-[#e8e4db] rounded-lg p-8 bg-white hover:border-amber-600/30 hover:shadow-md transition-all">
+              <div className="mb-4">
+                <span className="text-xs font-semibold text-amber-600 tracking-wide">{dataset.category}</span>
+              </div>
+              <h3 className="font-serif text-xl font-light text-[#1a2847] mb-4">{dataset.title}</h3>
+              <p className="text-[#5a6b7a] mb-6">{dataset.description}</p>
 
-              <div className="bg-gray-50 rounded p-3 mb-4 text-sm">
-                <p className="font-semibold text-gray-900 mb-2">📅 Coverage</p>
-                <p className="text-gray-700">{dataset.coverage}</p>
+              <div className="mb-6 pb-6 border-t border-[#e8e4db] pt-6">
+                <p className="text-sm font-semibold text-[#1a2847] mb-1">Coverage</p>
+                <p className="text-sm text-[#5a6b7a]">{dataset.coverage}</p>
               </div>
 
-              <div className="mb-4 text-sm">
-                <p className="font-semibold text-gray-900 mb-2">📋 Variables</p>
-                <ul className="text-gray-700 space-y-1">
-                  {dataset.variables.slice(0, 5).map((v, idx) => (
-                    <li key={idx}>• {v}</li>
+              <div className="mb-6 pb-6 border-b border-[#e8e4db]">
+                <p className="text-sm font-semibold text-[#1a2847] mb-3">Variables</p>
+                <div className="text-sm text-[#5a6b7a] space-y-2">
+                  {dataset.variables.slice(0, 4).map((v, idx) => (
+                    <div key={idx}>{v}</div>
                   ))}
-                  {dataset.variables.length > 5 && (
-                    <li className="text-gray-600 italic">+ {dataset.variables.length - 5} more</li>
+                  {dataset.variables.length > 4 && (
+                    <div className="text-[#5a6b7a]">+ {dataset.variables.length - 4} more</div>
                   )}
-                </ul>
+                </div>
               </div>
 
-              <div className="flex justify-between items-center mb-4 pb-4 border-t border-gray-200 pt-4">
+              <div className="flex justify-between items-end">
                 <div>
-                  <p className="text-2xl font-bold text-gray-900">KES {dataset.price}</p>
-                  <p className="text-xs text-gray-600">{dataset.format}</p>
+                  <p className="text-xs text-[#5a6b7a] mb-1">{dataset.format}</p>
+                  <p className="font-serif text-2xl font-light text-[#1a2847]">KES {dataset.price}</p>
                 </div>
                 <button
-                  onClick={() => handleRequestSubmit({ preventDefault: () => {} } as any, dataset.id)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold text-sm"
+                  onClick={() => setSelectedDataset(dataset.id)}
+                  className="px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium text-sm transition-colors"
                 >
                   Request
                 </button>
@@ -222,25 +220,26 @@ export default function DataPage() {
       </section>
 
       {/* Bundles */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-gray-200">
-        <h2 className="text-3xl font-bold text-gray-900 mb-12">Dataset Bundles (Save Up to 21%)</h2>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Save with bundles</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {BUNDLES.map((bundle) => (
-            <div key={bundle.id} className="border-2 border-green-600 rounded-lg p-6 relative">
-              <div className="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded text-sm font-semibold">
+            <div key={bundle.id} className="border border-amber-600/40 rounded-lg p-8 bg-white relative hover:border-amber-600 transition-all">
+              <div className="absolute top-6 right-6 bg-amber-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
                 Save {bundle.savings}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{bundle.name}</h3>
-              <p className="text-gray-700 mb-4">{bundle.description}</p>
+              <h3 className="font-serif text-lg text-[#1a2847] mb-2 mt-4">{bundle.name}</h3>
+              <p className="text-sm text-[#5a6b7a] mb-6">{bundle.description}</p>
 
-              <div className="mb-4">
-                <p className="text-lg">
-                  <span className="line-through text-gray-500">KES {bundle.regularPrice}</span>{' '}
-                  <span className="text-2xl font-bold text-green-600 ml-2">KES {bundle.bundlePrice}</span>
-                </p>
+              <div className="mb-8 pb-8 border-b border-[#e8e4db]">
+                <p className="text-xs text-[#5a6b7a] tracking-wide mb-2">PRICING</p>
+                <div className="flex items-baseline gap-3">
+                  <span className="line-through text-[#5a6b7a] text-sm">KES {bundle.regularPrice}</span>
+                  <span className="font-serif text-2xl font-light text-amber-600">KES {bundle.bundlePrice}</span>
+                </div>
               </div>
 
-              <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
+              <button className="w-full px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium transition-colors">
                 Request Bundle
               </button>
             </div>
@@ -249,78 +248,116 @@ export default function DataPage() {
       </section>
 
       {/* How It Works */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-gray-200">
-        <h2 className="text-3xl font-bold text-gray-900 mb-12">How It Works</h2>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">How it works</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {[
-            { step: '1', title: 'Browse', description: 'Explore available datasets and bundles' },
-            { step: '2', title: 'Request', description: 'Click "Request" and provide your details' },
-            { step: '3', title: 'Pay', description: 'Receive invoice and pay via M-Pesa or card' },
-            { step: '4', title: 'Download', description: 'Get your cleaned Excel file immediately' },
+            { step: '01', title: 'Browse', description: 'Explore available datasets and bundles' },
+            { step: '02', title: 'Request', description: 'Submit your details and dataset preferences' },
+            { step: '03', title: 'Invoice', description: 'Receive payment details within 24 hours' },
+            { step: '04', title: 'Download', description: 'Access your cleaned data immediately' },
           ].map((item) => (
-            <div key={item.step} className="text-center">
-              <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mx-auto mb-4">
-                {item.step}
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
-              <p className="text-gray-600">{item.description}</p>
+            <div key={item.step}>
+              <p className="text-3xl font-serif font-light text-amber-600/40 mb-4">{item.step}</p>
+              <h3 className="font-serif text-lg text-[#1a2847] mb-3">{item.title}</h3>
+              <p className="text-[#5a6b7a] text-sm leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Data Quality */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-gray-200">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">Data Quality & Transparency</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+        <h2 className="font-serif text-3xl font-light text-[#1a2847] mb-16">Data standards</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">✅ What We Do</h3>
-            <ul className="space-y-3 text-gray-700">
-              <li>✓ Download official KNBS data</li>
-              <li>✓ Remove duplicates and inconsistencies</li>
-              <li>✓ Standardize column names and formats</li>
-              <li>✓ Verify data integrity and completeness</li>
-              <li>✓ Document all variables clearly</li>
-              <li>✓ Provide ReadMe with methodology</li>
+            <h3 className="font-serif text-lg text-[#1a2847] mb-6">Our approach</h3>
+            <ul className="space-y-4 text-[#5a6b7a]">
+              <li className="flex gap-3">
+                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
+                <span>Download official KNBS data directly</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
+                <span>Remove duplicates and inconsistencies</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
+                <span>Standardize column names and data types</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
+                <span>Verify completeness and data integrity</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
+                <span>Document all variables and definitions</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-amber-600 font-semibold flex-shrink-0">✓</span>
+                <span>Include methodology and data notes</span>
+              </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">⚠️ What We Don't Do</h3>
-            <ul className="space-y-3 text-gray-700">
-              <li>✗ Alter underlying data values</li>
-              <li>✗ Add interpretations or projections</li>
-              <li>✗ Sell proprietary analysis</li>
-              <li>✗ Claim ownership of public data</li>
-              <li>✗ Remove source attribution</li>
-              <li>✗ Make guarantees about accuracy</li>
+            <h3 className="font-serif text-lg text-[#1a2847] mb-6">What we don't do</h3>
+            <ul className="space-y-4 text-[#5a6b7a]">
+              <li className="flex gap-3">
+                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
+                <span>Alter underlying data values</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
+                <span>Add interpretations or projections</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
+                <span>Sell proprietary analysis</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
+                <span>Claim ownership of public data</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
+                <span>Remove source attribution</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-[#5a6b7a] font-semibold flex-shrink-0">—</span>
+                <span>Guarantee data completeness</span>
+              </li>
             </ul>
           </div>
         </div>
       </section>
 
       {/* Legal Notice */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 rounded-lg">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">📋 Legal Notice</h3>
-        <p className="text-gray-700 mb-3">
-          All data provided is sourced from the <strong>Kenya National Bureau of Statistics (KNBS)</strong> and is in the public domain. LeadAfrik provides value through data cleaning, standardization, and documentation only.
-        </p>
-        <p className="text-gray-700 mb-3">
-          By purchasing our datasets, you agree to use them for educational, analytical, and journalistic purposes consistent with KNBS terms.
-        </p>
-        <p className="text-sm text-gray-600">
-          Questions? Contact us at <a href="mailto:omukokookoth@gmail.com" className="text-blue-600 hover:underline">omukokookoth@gmail.com</a>
-        </p>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-[#e8e4db]">
+        <h3 className="font-serif text-lg text-[#1a2847] mb-6">Legal notice</h3>
+        <div className="max-w-3xl space-y-4 text-[#5a6b7a]">
+          <p>
+            All data provided is sourced from the <strong className="text-[#1a2847]">Kenya National Bureau of Statistics</strong> and is in the public domain. LeadAfrik provides value through data cleaning, standardization, and documentation only.
+          </p>
+          <p>
+            By requesting our datasets, you agree to use them for educational, analytical, research, and journalistic purposes consistent with KNBS terms and conditions.
+          </p>
+          <p className="text-sm pt-4 border-t border-[#e8e4db]">
+            Questions about these datasets or custom extractions? Contact <a href="mailto:omukokookoth@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium">omukokookoth@gmail.com</a>
+          </p>
+        </div>
       </section>
 
       {/* CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to get started?</h2>
-        <p className="text-lg text-gray-600 mb-8">
-          Pick a dataset above and submit your request. You'll receive an invoice within 24 hours.
-        </p>
-        <p className="text-gray-700">
-          Need a custom extraction or different data? <a href="mailto:omukokookoth@gmail.com" className="text-blue-600 hover:underline font-semibold">Contact us</a>
-        </p>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-2xl">
+          <h2 className="font-serif text-4xl font-light text-[#1a2847] mb-6">Ready to access Kenya's data</h2>
+          <p className="text-lg text-[#5a6b7a] mb-8">
+            Select a dataset above and submit your request. You'll receive an invoice within one business day.
+          </p>
+          <p className="text-[#5a6b7a]">
+            Looking for a custom extraction or specific data not listed here? <a href="mailto:omukokookoth@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium">Get in touch with us</a>
+          </p>
+        </div>
       </section>
     </div>
   );
