@@ -50,7 +50,7 @@ export default async function Home() {
                     {leadPost.type || "Article"}
                   </span>
                   <h2 className="text-5xl font-serif font-bold text-gray-900 mb-6 leading-tight">
-                    <Link href={`/blog/${leadPost.slug.current}`} className="hover:text-gold transition-colors">
+                    <Link href={`/blog/${leadPost.slug.current}`} className="hover:text-amber-600 transition-colors">
                       {leadPost.title}
                     </Link>
                   </h2>
@@ -107,7 +107,7 @@ export default async function Home() {
                         {doc.category}
                       </p>
                       <h4 className="text-lg font-serif font-bold text-gray-900 mb-3">
-                        <Link href={`/documents/${doc.slug.current}`} className="hover:text-gold transition-colors">
+                        <Link href={`/documents/${doc.slug.current}`} className="hover:text-amber-600 transition-colors">
                           {doc.title}
                         </Link>
                       </h4>
@@ -140,7 +140,7 @@ export default async function Home() {
                 </div>
                 <Link
                   href="/snapshot"
-                  className="inline-block mt-6 text-sm font-semibold text-gold hover:text-gold/80 transition-colors"
+                  className="inline-block mt-6 text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors"
                 >
                   View Full Snapshot →
                 </Link>
@@ -157,7 +157,7 @@ export default async function Home() {
               </p>
               <Link
                 href="/data"
-                className="inline-block text-sm font-semibold text-gold hover:text-gold/80 transition-colors"
+                className="inline-block text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors"
               >
                 Browse Data →
               </Link>

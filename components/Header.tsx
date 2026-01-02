@@ -26,9 +26,9 @@ export default function Header() {
             <p className="text-xs font-semibold tracking-widest text-gray-700 uppercase mb-2">
               LeadAfrik
             </p>
-            <h1 className="text-2xl font-serif font-bold text-gray-900">
+            <div className="text-2xl font-serif font-bold text-gray-900">
               {SITE_NAME}
-            </h1>
+            </div>
             <p className="text-sm text-gray-600 font-serif italic mt-2">
               Kenya's economic policy, explained clearly
             </p>
@@ -44,7 +44,7 @@ export default function Header() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="hover:text-gray-900 hover:border-b-2 border-gold transition-colors pb-1"
+                    className="hover:text-gray-900 hover:border-b-2 hover:border-amber-600 transition-colors pb-1"
                   >
                     {item.label}
                   </Link>

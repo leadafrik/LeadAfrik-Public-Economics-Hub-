@@ -22,7 +22,7 @@ export default function PostCard({ post }: PostCardProps) {
   const readingTime = content ? Math.ceil(content.split(/\s+/).length / 200) : 5;
 
   return (
-    <article className="border border-gray-200/60 rounded-lg p-8 hover:shadow-lg hover:border-gold transition-all duration-200 bg-white">
+    <article className="border border-gray-200/60 rounded-lg p-8 hover:shadow-lg hover:border-amber-600 transition-all duration-200 bg-white">
       {/* Featured Badge + Meta */}
       <div className="flex items-center gap-3 mb-6">
         <span className="inline-block px-3 py-1 bg-gray-100 text-xs font-semibold uppercase tracking-wide text-gray-700 rounded-sm">
@@ -42,7 +42,7 @@ export default function PostCard({ post }: PostCardProps) {
 
       {/* Headline */}
       <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4 leading-tight">
-        <Link href={`/blog/${slug}`} className="hover:text-gold transition-colors">
+        <Link href={`/blog/${slug}`} className="hover:text-amber-600 transition-colors">
           {title}
         </Link>
       </h3>
@@ -74,7 +74,7 @@ export default function PostCard({ post }: PostCardProps) {
           {tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 text-xs text-gray-600 border border-gray-200 rounded-sm hover:border-gold transition-colors"
+              className="px-2 py-1 text-xs text-gray-600 border border-gray-200 rounded-sm hover:border-amber-600 transition-colors"
             >
               #{tag}
             </span>
