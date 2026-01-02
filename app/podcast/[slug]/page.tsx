@@ -1,25 +1,29 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import Link from "next/link";
-import { mockEpisodes } from "@/lib/mockData";
+import { notFound } from "next/navigation";
+import { sanityFetch } from "@/lib/sanity.client";
+import { SINGLE_EPISODE_QUERY } from "@/lib/sanity.queries";
+import { SanityEpisode } from "@/lib/sanity.types";
 
-export default function EpisodeDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-
-  const episode = mockEpisodes.find((e) => e.slug === slug);
+export default async function EpisodeDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const episode = await sanityFetch<SanityEpisode>({
+    query: SINGLE_EPISODE_QUERY,
+    params: { slug },
+  });
 
   if (!episode) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Episode not found</h1>
-        <Link href="/podcast" className="text-blue-600 hover:text-blue-700">
-          ← Back to podcast
-        </Link>
-      </div>
-    );
+    notFound();
   }
+
+  const publishedDate = new Date(episode.publishedAt).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div className="min-h-screen bg-white">
@@ -29,47 +33,48 @@ export default function EpisodeDetailPage() {
         </Link>
 
         <header className="mb-12 border-b border-gray-200 pb-8">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl sm:text-5xl font-light text-gray-900 mb-4">
             {episode.title}
           </h1>
-          <p className="text-gray-600 mb-4">{episode.date}</p>
+          <p className="text-gray-600 mb-4">{publishedDate}</p>
           <div className="flex gap-2">
             {(episode.platform === "podcast" || episode.platform === "both") && (
-              <span className="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded">
+              <span className="text-xs bg-purple-100 text-purple-700 px-3 py-1">
                 Podcast
               </span>
             )}
             {(episode.platform === "youtube" || episode.platform === "both") && (
-              <span className="text-xs bg-red-100 text-red-700 px-3 py-1 rounded">
+              <span className="text-xs bg-red-100 text-red-700 px-3 py-1">
                 YouTube
               </span>
             )}
           </div>
         </header>
 
-        {/* Embed Player */}
-        <div className="mb-12 aspect-video bg-gray-100 rounded-lg overflow-hidden border border-gray-300">
-          <iframe
-            width="100%"
-            height="100%"
-            src={episode.embedUrl}
-            title={episode.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
+        {episode.embedUrl && (
+          <div className="mb-12 aspect-video bg-gray-100 overflow-hidden border border-gray-200">
+            <iframe
+              width="100%"
+              height="100%"
+              src={episode.embedUrl}
+              title={episode.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
 
-        {/* Summary */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Summary</h2>
-          <p className="text-gray-700 leading-relaxed">{episode.summary}</p>
-        </div>
+        {episode.summary && (
+          <div className="mb-12">
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Summary</h2>
+            <p className="text-gray-700 leading-relaxed font-serif">{episode.summary}</p>
+          </div>
+        )}
 
-        {/* Timestamps */}
         {episode.timestamps && episode.timestamps.length > 0 && (
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Timestamps</h2>
+            <h2 className="text-2xl font-light text-gray-900 mb-4">Timestamps</h2>
             <ul className="space-y-2">
               {episode.timestamps.map((ts, idx) => (
                 <li key={idx} className="text-gray-700">
@@ -81,10 +86,9 @@ export default function EpisodeDetailPage() {
           </div>
         )}
 
-        {/* References */}
         {episode.references && episode.references.length > 0 && (
           <div className="border-t border-gray-200 pt-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">References</h2>
+            <h2 className="text-2xl font-light text-gray-900 mb-4">References</h2>
             <ul className="space-y-2">
               {episode.references.map((ref, idx) => (
                 <li key={idx}>

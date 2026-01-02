@@ -28,7 +28,7 @@ export default async function PodcastPage() {
                     {episode.title}
                   </Link>
                 </h3>
-                <p className="text-sm text-gray-600 mb-4">{new Date(episode.date).toLocaleDateString()}</p>
+                <p className="text-sm text-gray-600 mb-4">{new Date(episode.publishedAt).toLocaleDateString()}</p>
               </div>
 
               <p className="text-gray-700 mb-6 leading-relaxed line-clamp-3">{episode.summary}</p>

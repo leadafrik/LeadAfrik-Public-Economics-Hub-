@@ -96,6 +96,40 @@ export default defineType({
       type: 'array',
       of: [{type: 'reference', to: [{type: 'post'}]}],
     }),
+    defineField({
+      name: 'columns',
+      title: 'Data Dictionary (Columns)',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          {name: 'name', type: 'string', title: 'Column Name'},
+          {name: 'description', type: 'text', title: 'Description'},
+          {name: 'unit', type: 'string', title: 'Unit (e.g., KES, %, count)'},
+          {name: 'dataType', type: 'string', title: 'Data Type', options: {list: ['string', 'number', 'date', 'boolean']}},
+        ]
+      }],
+      description: 'Define columns for Data Dictionary page',
+    }),
+    defineField({
+      name: 'updateFrequency',
+      title: 'Update Frequency',
+      type: 'string',
+      options: {list: ['Weekly', 'Monthly', 'Quarterly', 'Annual', 'On-demand']},
+      description: 'How often is this dataset updated?',
+    }),
+    defineField({
+      name: 'csvPreview',
+      title: 'CSV Preview (first 5 rows)',
+      type: 'text',
+      description: 'CSV format of first 5 rows for preview',
+    }),
+    defineField({
+      name: 'citationFormat',
+      title: 'Citation Format',
+      type: 'text',
+      description: 'e.g., "LeadAfrik Economics. (2025). CPI Monthly..."',
+    }),
   ],
   preview: {
     select: {

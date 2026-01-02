@@ -61,16 +61,34 @@ export interface SanityDocument {
     }
   }
   relatedPosts?: SanityPost[]
+  // New fields for enhanced data features
+  columns?: Array<{
+    name: string
+    description: string
+    unit?: string
+    dataType: 'string' | 'number' | 'date' | 'boolean'
+  }>
+  updateFrequency?: 'Weekly' | 'Monthly' | 'Quarterly' | 'Annual' | 'On-demand'
+  csvPreview?: string
+  citationFormat?: string
 }
 
 export interface SanityEpisode {
   _id: string
   title: string
   slug: {current: string}
-  date: string
+  publishedAt: string
   platform: 'podcast' | 'youtube' | 'both'
-  embedUrl: string
-  summary: string
+  embedUrl?: string
+  summary?: string
+  timestamps?: Array<{
+    time: string
+    label: string
+  }>
+  references?: Array<{
+    title: string
+    url?: string
+  }>
   relatedDocuments?: SanityDocument[]
   relatedPosts?: SanityPost[]
 }
