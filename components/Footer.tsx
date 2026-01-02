@@ -12,8 +12,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-gray-900 mb-4">LeadAfrik</h3>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Kenya's economic policy—explained clearly. Documents, analysis, and
-              education.
+              Research and analysis on Kenya's public economics. We prepare official documents and data for clarity and understanding.
             </p>
           </div>
 

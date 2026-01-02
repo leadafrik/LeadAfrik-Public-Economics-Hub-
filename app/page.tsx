@@ -30,7 +30,7 @@ export default async function Home() {
             {homeSettings?.heroHeadline || "Kenya's economic policy—explained clearly."}
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-serif">
-            {homeSettings?.heroSubheadline || "Public economic documents, analysis, and data—presented with context."}
+            {homeSettings?.heroSubheadline || "Documents, analysis, and data that clarify how economic decisions shape Kenya."}
           </p>
         </div>
       </section>
@@ -42,12 +42,7 @@ export default async function Home() {
       <section className="max-w-6xl mx-auto px-6">
         {/* Featured Posts */}
         <div className="mb-24">
-          <div className="flex justify-between items-end mb-12">
-            <h2 className="text-3xl font-light text-gray-900">Latest Analysis</h2>
-            <Link href="/blog" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-              View all →
-            </Link>
-          </div>
+          <h2 className="text-3xl font-light text-gray-900 mb-12">Latest Analysis</h2>
           {featuredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {featuredPosts.map((post) => (
@@ -61,12 +56,7 @@ export default async function Home() {
 
         {/* Featured Documents */}
         <div className="mb-24 border-t border-gray-200 pt-24">
-          <div className="flex justify-between items-end mb-12">
-            <h2 className="text-3xl font-light text-gray-900">Documents Library</h2>
-            <Link href="/documents" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-              Browse all →
-            </Link>
-          </div>
+          <h2 className="text-3xl font-light text-gray-900 mb-12">Economic Documents</h2>
           {recentDocuments.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {recentDocuments.map((doc) => (
@@ -82,12 +72,7 @@ export default async function Home() {
       {/* Snapshot Preview */}
       {snapshot && (
         <section className="max-w-6xl mx-auto px-6 py-24 border-t border-gray-200">
-          <div className="flex justify-between items-end mb-12">
-            <h2 className="text-3xl font-light text-gray-900">Kenya Economy Snapshot</h2>
-            <Link href="/snapshot" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-              View full snapshot →
-            </Link>
-          </div>
+          <h2 className="text-3xl font-light text-gray-900 mb-12">Kenya Economy Snapshot</h2>
           <p className="text-sm text-gray-600 mb-8">Latest: {snapshot.dateRange}</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
             {snapshot.indicators.map((indicator, idx) => (
