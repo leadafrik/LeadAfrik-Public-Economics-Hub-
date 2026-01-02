@@ -41,38 +41,42 @@ export default async function Home() {
       {/* Latest Content */}
       <section className="max-w-6xl mx-auto px-6">
         {/* Featured Posts */}
-        {featuredPosts.length > 0 && (
-          <div className="mb-24">
-            <div className="flex justify-between items-end mb-12">
-              <h2 className="text-3xl font-light text-gray-900">Latest Analysis</h2>
-              <Link href="/blog" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-                View all →
-              </Link>
-            </div>
+        <div className="mb-24">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-3xl font-light text-gray-900">Latest Analysis</h2>
+            <Link href="/blog" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+              View all →
+            </Link>
+          </div>
+          {featuredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {featuredPosts.map((post) => (
                 <PostCard key={post._id} post={post} />
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <p className="text-gray-600 italic">New analysis coming soon.</p>
+          )}
+        </div>
 
         {/* Featured Documents */}
-        {recentDocuments.length > 0 && (
-          <div className="mb-24 border-t border-gray-200 pt-24">
-            <div className="flex justify-between items-end mb-12">
-              <h2 className="text-3xl font-light text-gray-900">Documents Library</h2>
-              <Link href="/documents" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-                Browse all →
-              </Link>
-            </div>
+        <div className="mb-24 border-t border-gray-200 pt-24">
+          <div className="flex justify-between items-end mb-12">
+            <h2 className="text-3xl font-light text-gray-900">Documents Library</h2>
+            <Link href="/documents" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
+              Browse all →
+            </Link>
+          </div>
+          {recentDocuments.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {recentDocuments.map((doc) => (
                 <DocumentCard key={doc._id} doc={doc} />
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <p className="text-gray-600 italic">Document library coming soon.</p>
+          )}
+        </div>
       </section>
 
       {/* Snapshot Preview */}

@@ -9,16 +9,15 @@ interface PostCardProps {
 
 export default function PostCard({ post }: PostCardProps) {
   const isPost = (p: Post | SanityPost): p is Post => 'id' in p;
-  const isSanityPost = (p: Post | SanityPost): p is SanityPost => '_id' in p;
 
   const slug = isPost(post) ? post.slug : post.slug.current;
   const title = post.title;
   const excerpt = isPost(post) ? post.excerpt : post.excerpt || post.content?.substring(0, 150) || '';
-  const featured = isPost(post) ? post.featured : post.featured;
   const tags = post.tags || [];
   const type = post.type;
   const publishedAt = post.publishedAt;
   const authorName = isPost(post) ? post.author : post.author?.name || 'Anonymous';
+  const featured = post.featured || false;
 
   return (
     <article className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">

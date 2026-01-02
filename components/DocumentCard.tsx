@@ -8,7 +8,6 @@ interface DocumentCardProps {
 
 export default function DocumentCard({ doc }: DocumentCardProps) {
   const isDocument = (d: Document | SanityDocument): d is Document => 'id' in d;
-  const isSanityDocument = (d: Document | SanityDocument): d is SanityDocument => '_id' in d;
 
   const slug = isDocument(doc) ? doc.slug : doc.slug.current;
   const title = doc.title;
