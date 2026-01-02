@@ -1,9 +1,13 @@
 import Link from "next/link";
 import DocumentCard from "@/components/DocumentCard";
-import { mockDocuments } from "@/lib/mockData";
+import { sanityFetch } from "@/lib/sanity.client";
+import { ALL_DOCUMENTS_QUERY } from "@/lib/sanity.queries";
 import { DOCUMENT_CATEGORIES, DOCUMENT_TAGS } from "@/lib/constants";
+import { SanityDocument } from "@/lib/sanity.types";
 
-export default function DocumentsPage() {
+export default async function DocumentsPage() {
+  const documents = await sanityFetch<SanityDocument[]>({ query: ALL_DOCUMENTS_QUERY });
+
   return (
     <div className="min-h-screen bg-white">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -54,8 +58,8 @@ export default function DocumentsPage() {
 
         {/* Documents Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {mockDocuments.map((doc) => (
-            <DocumentCard key={doc.id} doc={doc} />
+          {documents.map((doc) => (
+            <DocumentCard key={doc._id} doc={doc} />
           ))}
         </div>
       </section>

@@ -1,7 +1,11 @@
-import { mockEpisodes } from "@/lib/mockData";
+import { sanityFetch } from "@/lib/sanity.client";
+import { ALL_EPISODES_QUERY } from "@/lib/sanity.queries";
 import Link from "next/link";
+import { SanityEpisode } from "@/lib/sanity.types";
 
-export default function PodcastPage() {
+export default async function PodcastPage() {
+  const episodes = await sanityFetch<SanityEpisode[]>({ query: ALL_EPISODES_QUERY });
+
   return (
     <div className="min-h-screen bg-white">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -14,18 +18,18 @@ export default function PodcastPage() {
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {mockEpisodes.map((episode) => (
+          {episodes.map((episode) => (
             <div
-              key={episode.id}
+              key={episode._id}
               className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
             >
               <div className="mb-4">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  <Link href={`/podcast/${episode.slug}`} className="hover:text-blue-600">
+                  <Link href={`/podcast/${episode.slug.current}`} className="hover:text-blue-600">
                     {episode.title}
                   </Link>
                 </h3>
-                <p className="text-sm text-gray-600 mb-4">{episode.date}</p>
+                <p className="text-sm text-gray-600 mb-4">{new Date(episode.date).toLocaleDateString()}</p>
               </div>
 
               <p className="text-gray-700 mb-6 line-clamp-3">{episode.summary}</p>
@@ -47,7 +51,7 @@ export default function PodcastPage() {
               </div>
 
               <Link
-                href={`/podcast/${episode.slug}`}
+                href={`/podcast/${episode.slug.current}`}
                 className="text-blue-600 hover:text-blue-700 font-semibold"
               >
                 Listen & Read →

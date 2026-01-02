@@ -29,6 +29,11 @@ export default function Header() {
               </Link>
             </li>
             <li>
+              <Link href="/data" className="hover:text-blue-600">
+                Data Store
+              </Link>
+            </li>
+            <li>
               <Link href="/learn" className="hover:text-blue-600">
                 Learn
               </Link>
@@ -45,10 +50,10 @@ export default function Header() {
             </li>
             <li>
               <Link
-                href="/consulting"
+                href="/data"
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
-                Consulting
+                Get Data
               </Link>
             </li>
           </ul>
