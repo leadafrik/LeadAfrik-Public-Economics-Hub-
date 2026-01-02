@@ -27,7 +27,7 @@ export default async function Home() {
       <section className="max-w-4xl mx-auto px-6 py-24 sm:py-32">
         <div className="text-center">
           <h1 className="text-4xl sm:text-5xl font-light text-gray-900 mb-8 leading-tight">
-            {homeSettings?.heroHeadline || "Kenya's economic policy—explained clearly."}
+            {homeSettings?.heroHeadline || "Kenya's economic policy - explained clearly."}
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-serif">
             {homeSettings?.heroSubheadline || "Documents, analysis, and data that clarify how economic decisions shape Kenya."}

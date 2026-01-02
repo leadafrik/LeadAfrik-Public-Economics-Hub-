@@ -42,7 +42,7 @@ export default function DataDictionary({ columns, updateFrequency }: DataDiction
               <tr key={idx} className="border-b border-gray-200 hover:bg-gray-50">
                 <td className="px-6 py-3 font-mono text-blue-600">{col.name}</td>
                 <td className="px-6 py-3 text-gray-700">{col.description}</td>
-                <td className="px-6 py-3 text-gray-600">{col.unit || '—'}</td>
+                <td className="px-6 py-3 text-gray-600">{col.unit || '-'}</td>
                 <td className="px-6 py-3 text-gray-600 text-xs">{col.dataType}</td>
               </tr>
             ))}

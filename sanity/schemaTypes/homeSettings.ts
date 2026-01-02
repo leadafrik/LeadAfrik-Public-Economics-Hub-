@@ -16,7 +16,7 @@ export default defineType({
       name: 'heroHeadline',
       title: 'Hero Headline',
       type: 'string',
-      initialValue: "Kenya's economic policy—explained clearly.",
+      initialValue: "Kenya's economic policy - explained clearly.",
     }),
     defineField({
       name: 'heroSubheadline',

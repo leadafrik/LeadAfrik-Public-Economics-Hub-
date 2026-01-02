@@ -16,7 +16,7 @@ export default function AboutPage() {
               LeadAfrik Public Economics Hub is a media and education platform focused on
               Kenyan economic policy. We publish document summaries, explainers, and
               data-informed analysis to help Kenyans understand how economic decisions
-              shape daily life—taxes, prices, public spending, debt, and devolution.
+              shape daily life - taxes, prices, public spending, debt, and devolution.
             </p>
             <p>
               Our work prioritizes clarity, evidence, and context. Where possible, we link
@@ -49,7 +49,7 @@ export default function AboutPage() {
             </p>
             <p>
               I'm interested in public finance, political economy, and international
-              affairs—and in making economic policy understandable to everyday Kenyans.
+              affairs - and in making economic policy understandable to everyday Kenyans.
             </p>
             <p>
               <strong>Languages:</strong> English, Swahili

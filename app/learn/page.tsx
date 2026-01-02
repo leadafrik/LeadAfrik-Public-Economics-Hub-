@@ -8,7 +8,7 @@ export default function LearnPage() {
         <header className="mb-16">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Learn</h1>
           <p className="text-lg text-gray-600">
-            Structured learning about Kenya's economy—without being overly academic.
+            Structured learning about Kenya's economy - without being overly academic.
           </p>
         </header>
 

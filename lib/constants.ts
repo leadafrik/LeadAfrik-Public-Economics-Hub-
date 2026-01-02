@@ -2,7 +2,7 @@
 
 export const SITE_NAME = "LeadAfrik Public Economics Hub";
 export const SITE_DESCRIPTION =
-  "Kenya's economic policy—explained clearly. Documents, explainers, episodes, and analysis.";
+  "Kenya's economic policy - explained clearly. Documents, explainers, episodes, and analysis.";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://leadafrik.com";
 
