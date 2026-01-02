@@ -55,9 +55,9 @@ export default function Header() {
             {/* Desktop CTA Button */}
             <Link
               href="/contribute"
-              className="hidden md:inline-block px-6 py-2 bg-amber-600 text-white text-sm font-semibold rounded hover:bg-amber-700 transition-colors"
+              className="hidden md:inline-block px-4 py-1 text-sm text-amber-600 border border-amber-600 rounded hover:bg-amber-50 transition-colors"
             >
-              Submit Analysis
+              Contribute
             </Link>
 
             {/* Mobile Menu Button */}
@@ -88,10 +88,10 @@ export default function Header() {
                 <li className="pt-4 border-t border-current/10">
                   <Link
                     href="/contribute"
-                    className="block px-4 py-2 bg-amber-600 text-white text-sm font-semibold rounded hover:bg-amber-700 transition-colors"
+                    className="block text-amber-600 text-sm border border-amber-600 rounded px-4 py-2 hover:bg-amber-50 transition-colors text-center"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Submit Analysis
+                    Contribute
                   </Link>
                 </li>
               </ul>
