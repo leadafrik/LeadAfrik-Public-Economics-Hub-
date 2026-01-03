@@ -1,0 +1,13 @@
+<svg width="640" height="120" viewBox="0 0 640 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LeadAfrik">
+  <rect width="100%" height="100%" fill="white"/>
+  <text
+    x="20"
+    y="78"
+    fill="#0B2A4A"
+    font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    font-size="64"
+    font-weight="600"
+    letter-spacing="-0.02em">
+    LeadAfrik
+  </text>
+</svg>

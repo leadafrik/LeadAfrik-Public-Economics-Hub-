@@ -23,9 +23,11 @@ export default function Header() {
         {/* Masthead */}
         <div className="py-6 border-b border-current/10">
           <Link href="/" className="block">
-            <p className="text-xs font-semibold tracking-widest text-gray-700 uppercase mb-1">
-              LeadAfrik
-            </p>
+            <img 
+              src="/logo.svg" 
+              alt="LeadAfrik" 
+              className="h-16 w-auto mb-2"
+            />
             <div className="text-2xl font-serif font-bold text-gray-900">
               {SITE_NAME}
             </div>
