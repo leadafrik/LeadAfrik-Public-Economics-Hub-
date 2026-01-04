@@ -7,11 +7,6 @@ import { ABOUT_SETTINGS_QUERY } from '@/lib/sanity.queries';
 import { AboutSettings } from '@/lib/sanity.types';
 import { PortableText } from 'next-sanity';
 
-export const metadata = {
-  title: 'About LeadAfrik | Kenya\'s Economic Policy Hub',
-  description: 'Learn about LeadAfrik\'s mission to make Kenya\'s economic data accessible and drive evidence-based policy conversations.',
-};
-
 const portableTextComponents = {
   block: {
     p: ({children}: any) => <p className="text-[#5a6b7a] leading-relaxed">{children}</p>,

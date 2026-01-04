@@ -6,11 +6,6 @@ import { sanityFetch } from '@/lib/sanity.client';
 import { ALL_DATASETS_QUERY, ALL_DATASET_BUNDLES_QUERY, DATA_SETTINGS_QUERY } from '@/lib/sanity.queries';
 import { Dataset, DatasetBundle, DataSettings } from '@/lib/sanity.types';
 
-export const metadata = {
-  title: 'Data & Datasets | LeadAfrik',
-  description: 'Access Kenya\'s comprehensive economic datasets, research bundles, and data tools from LeadAfrik.',
-};
-
 export default function DataPage() {
   const [datasets, setDatasets] = useState<Dataset[]>([]);
   const [bundles, setBundles] = useState<DatasetBundle[]>([]);

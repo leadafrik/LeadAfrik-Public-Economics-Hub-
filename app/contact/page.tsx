@@ -1,12 +1,6 @@
 "use client";
 
 import { FormEvent } from "react";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: 'Contact Us | LeadAfrik',
-  description: 'Get in touch with LeadAfrik for inquiries, partnerships, or speaking opportunities.',
-};
 
 export default function ContactPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
