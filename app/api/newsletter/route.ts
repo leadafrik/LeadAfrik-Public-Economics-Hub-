@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { sanityFetch } from '@/lib/sanity.client';
+import { checkRateLimit } from '@/lib/rateLimit';
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit: 5 signups per IP per day
+    const rateLimitError = checkRateLimit(request, { limit: 5, window: 86400 });
+    if (rateLimitError) {
+      return rateLimitError;
+    }
+
     const { email, name } = await request.json();
 
     // Validate email

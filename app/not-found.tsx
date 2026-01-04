@@ -15,8 +15,8 @@ export default function NotFound() {
         </p>
         <p className="text-[#5a6b7a] mb-12">
           If you believe this is an error, please contact us at{' '}
-          <a href="mailto:stephen@leadafrik.com" className="text-amber-600 hover:text-amber-700 font-medium">
-            stephen@leadafrik.com
+          <a href="mailto:info@leadafrik.com" className="text-amber-600 hover:text-amber-700 font-medium">
+            info@leadafrik.com
           </a>
         </p>
 

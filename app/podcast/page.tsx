@@ -1,7 +1,13 @@
+import { Metadata } from "next";
 import { sanityFetch } from "@/lib/sanity.client";
 import { ALL_EPISODES_QUERY } from "@/lib/sanity.queries";
 import { SanityEpisode } from "@/lib/sanity.types";
 import ClientSearchPodcast from "@/components/ClientSearchPodcast";
+
+export const metadata: Metadata = {
+  title: 'Podcast & Episodes | Kenya Economic Policy Insights | LeadAfrik',
+  description: 'Listen to LeadAfrik\'s podcast episodes featuring in-depth analysis and interviews on Kenya\'s economic policy.',
+};
 
 export default async function PodcastPage() {
   const episodes = await sanityFetch<SanityEpisode[]>({ query: ALL_EPISODES_QUERY });

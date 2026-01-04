@@ -1,0 +1,14 @@
+# LeadAfrik robots.txt
+# Allow all search engines to crawl and index
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.next/
+Disallow: /node_modules/
+
+# Sitemaps
+Sitemap: https://leadafrik.com/sitemap.xml
+
+# Crawl delay (optional - set to 0 for no delay)
+Crawl-delay: 0

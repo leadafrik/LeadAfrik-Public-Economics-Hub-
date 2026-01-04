@@ -1,10 +1,16 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import PostCard from "@/components/PostCard";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { sanityFetch } from "@/lib/sanity.client";
 import { ALL_POSTS_QUERY } from "@/lib/sanity.queries";
 import { SanityPost } from "@/lib/sanity.types";
 import ClientSearchBlog from "@/components/ClientSearchBlog";
+
+export const metadata: Metadata = {
+  title: 'Blog | Analysis & Essays on Kenya\'s Economy | LeadAfrik',
+  description: 'Policy briefs, explainers, and data-informed analysis on Kenya\'s economy. Stay updated with LeadAfrik\'s latest insights.',
+};
 
 export default async function BlogPage() {
   const posts = await sanityFetch<SanityPost[]>({ query: ALL_POSTS_QUERY });

@@ -1,6 +1,12 @@
 "use client";
 
 import { FormEvent } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Contact Us | LeadAfrik',
+  description: 'Get in touch with LeadAfrik for inquiries, partnerships, or speaking opportunities.',
+};
 
 export default function ContactPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -47,54 +53,62 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form */}
-        <form onSubmit={handleSubmit} className="mb-16">
+        <form onSubmit={handleSubmit} className="mb-16" aria-label="Contact form">
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label htmlFor="name" className="block text-sm font-semibold text-gray-900 mb-2">
               Your Name
             </label>
             <input
+              id="name"
               type="text"
               required
+              aria-required="true"
               className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
               Email
             </label>
             <input
+              id="email"
               type="email"
               required
+              aria-required="true"
               className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label htmlFor="subject" className="block text-sm font-semibold text-gray-900 mb-2">
               Subject
             </label>
             <input
+              id="subject"
               type="text"
               required
+              aria-required="true"
               className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label htmlFor="message" className="block text-sm font-semibold text-gray-900 mb-2">
               Message
             </label>
             <textarea
+              id="message"
               required
+              aria-required="true"
               rows={6}
               className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
           <div className="mb-6">
-            <label className="flex items-center gap-2">
-              <input type="checkbox" required className="w-4 h-4" />
+            <label htmlFor="speaker" className="flex items-center gap-2">
+              <input id="speaker" type="checkbox" required className="w-4 h-4" />
               <span className="text-sm text-gray-600">
                 I'd like to be invited to speak at an event
               </span>

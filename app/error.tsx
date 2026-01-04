@@ -44,8 +44,8 @@ export default function Error({
 
         <p className="text-sm text-[#5a6b7a] mt-8">
           If the problem persists, contact us at{' '}
-          <a href="mailto:stephen@leadafrik.com" className="text-amber-600 hover:text-amber-700 font-medium">
-            stephen@leadafrik.com
+          <a href="mailto:info@leadafrik.com" className="text-amber-600 hover:text-amber-700 font-medium">
+            info@leadafrik.com
           </a>
         </p>
       </div>

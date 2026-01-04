@@ -1,9 +1,15 @@
+import { Metadata } from "next";
 import DocumentCard from "@/components/DocumentCard";
 import { sanityFetch } from "@/lib/sanity.client";
 import { ALL_DOCUMENTS_QUERY } from "@/lib/sanity.queries";
 import { DOCUMENT_CATEGORIES, DOCUMENT_TAGS } from "@/lib/constants";
 import { SanityDocument } from "@/lib/sanity.types";
 import ClientSearchDocuments from "@/components/ClientSearchDocuments";
+
+export const metadata: Metadata = {
+  title: 'Documents Library | Economic Policy Resources | LeadAfrik',
+  description: 'Explore Kenya\'s economic policy documents, research papers, and reports from LeadAfrik.',
+};
 
 export default async function DocumentsPage() {
   const documents = await sanityFetch<SanityDocument[]>({ query: ALL_DOCUMENTS_QUERY });
