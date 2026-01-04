@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
@@ -15,13 +16,14 @@ export default function NewsletterSignup() {
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, name }),
       });
       if (!response.ok) throw new Error('Subscription failed');
 
       setStatus('success');
       setMessage('Thank you for subscribing! Check your email to confirm.');
       setEmail('');
+      setName('');
       setTimeout(() => setStatus('idle'), 3000);
     } catch (error) {
       setStatus('error');
@@ -38,26 +40,37 @@ export default function NewsletterSignup() {
       <p className="text-base text-gray-700 mb-6">
         Newsletter: monthly data drops, policy analysis, and economic trends.
       </p>
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col gap-3">
         <input
-          type="email"
-          placeholder="your@email.com"
-          aria-label="Email address for newsletter signup"
-          aria-describedby="newsletter-heading"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
+          type="text"
+          placeholder="Your name (optional)"
+          aria-label="Name for newsletter signup"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           disabled={status === 'loading'}
-          className="flex-1 px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+          className="w-full px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
         />
-        <button
-          type="submit"
-          disabled={status === 'loading'}
-          aria-busy={status === 'loading'}
-          className="px-6 py-3 bg-blue-600 text-white text-base font-semibold hover:bg-blue-700 disabled:opacity-50 rounded transition-colors"
-        >
-          {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <input
+            type="email"
+            placeholder="your@email.com"
+            aria-label="Email address for newsletter signup"
+            aria-describedby="newsletter-heading"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={status === 'loading'}
+            className="flex-1 px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+          />
+          <button
+            type="submit"
+            disabled={status === 'loading'}
+            aria-busy={status === 'loading'}
+            className="px-6 py-3 bg-blue-600 text-white text-base font-semibold hover:bg-blue-700 disabled:opacity-50 rounded transition-colors"
+          >
+            {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+          </button>
+        </div>
       </div>
       {message && (
         <p 
