@@ -37,20 +37,20 @@ export default function ClientSearchDocuments({ documents }: ClientSearchDocumen
   return (
     <>
       {/* Search & Filters */}
-      <div className="mb-12 p-6 bg-amber-50/30 border border-amber-200 rounded">
-        <h3 className="text-sm font-semibold text-gray-900 mb-4">Filter Documents</h3>
+      <div className="mb-12 p-6 bg-gray-50 border border-gray-300 rounded-lg shadow-sm">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6 uppercase tracking-wide">Filter Documents</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <input
             type="text"
             placeholder="Search by title, institution..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="md:col-span-2 px-4 py-3 border border-amber-300 bg-white rounded focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/20 transition-colors text-sm"
+            className="md:col-span-2 px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-sm font-medium"
           />
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 py-3 border border-amber-300 bg-white rounded focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/20 transition-colors text-sm cursor-pointer"
+            className="px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-sm font-medium cursor-pointer"
           >
             <option value="">All categories</option>
             {DOCUMENT_CATEGORIES.map((cat) => (
@@ -62,7 +62,7 @@ export default function ClientSearchDocuments({ documents }: ClientSearchDocumen
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-4 py-3 border border-amber-300 bg-white rounded focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/20 transition-colors text-sm cursor-pointer"
+            className="px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-sm font-medium cursor-pointer"
           >
             <option value="">All years</option>
             {years.map((year) => (
@@ -76,7 +76,7 @@ export default function ClientSearchDocuments({ documents }: ClientSearchDocumen
 
       {/* Results counter */}
       {(searchTerm || selectedCategory || selectedYear) && (
-        <p className="text-sm font-medium text-amber-700 mb-8 flex items-center gap-2">
+        <p className="text-sm font-semibold text-gray-900 mb-8 flex items-center gap-2">
           <span>Found {filteredDocuments.length} document{filteredDocuments.length !== 1 ? 's' : ''}</span>
           <button
             onClick={() => {
@@ -84,7 +84,7 @@ export default function ClientSearchDocuments({ documents }: ClientSearchDocumen
               setSelectedCategory('');
               setSelectedYear('');
             }}
-            className="text-amber-600 hover:text-amber-700 underline text-xs"
+            className="text-blue-600 hover:text-blue-700 underline text-xs font-semibold"
           >
             Clear filters
           </button>
