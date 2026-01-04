@@ -72,12 +72,23 @@ export async function POST(request: NextRequest) {
           to: email,
           subject: 'Welcome to LeadAfrik Newsletter',
           html: `
-            <h2>Welcome to LeadAfrik!</h2>
-            <p>Hi ${name || 'there'},</p>
-            <p>Thank you for subscribing to our newsletter. You'll receive monthly data drops, policy analysis, and economic trends.</p>
-            <p>Best regards,<br/>LeadAfrik Team</p>
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
+              <h2 style="color: #0B2A4A;">Welcome to LeadAfrik!</h2>
+              <p>Hi ${name || 'there'},</p>
+              <p>Thank you for subscribing to our newsletter. You'll receive:</p>
+              <ul>
+                <li>Monthly data drops on Kenya's economy</li>
+                <li>Policy analysis & explainers</li>
+                <li>Economic trends & insights</li>
+              </ul>
+              
+              <p><strong>While you wait for our first newsletter, check out our YouTube channel</strong> for more content:</p>
+              <p><a href="https://www.youtube.com/@leadafrik" style="display: inline-block; padding: 12px 24px; background-color: #0B2A4A; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">Watch on YouTube</a></p>
+              
+              <p style="color: #666; font-size: 14px; margin-top: 30px;">Best regards,<br/>LeadAfrik Team</p>
+            </div>
           `,
-          text: `Welcome to LeadAfrik!\n\nHi ${name || 'there'},\n\nThank you for subscribing to our newsletter. You'll receive monthly data drops, policy analysis, and economic trends.\n\nBest regards,\nLeadAfrik Team`,
+          text: `Welcome to LeadAfrik!\n\nHi ${name || 'there'},\n\nThank you for subscribing to our newsletter. You'll receive:\n- Monthly data drops on Kenya's economy\n- Policy analysis & explainers\n- Economic trends & insights\n\nWhile you wait for our first newsletter, check out our YouTube channel:\nhttps://www.youtube.com/@leadafrik\n\nBest regards,\nLeadAfrik Team`,
         });
 
         // Send notification to admin
