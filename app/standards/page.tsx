@@ -62,8 +62,8 @@ export default function StandardsPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Corrections</h2>
             <p>
               If you spot an error, let us know at{" "}
-              <a href="mailto:hello@leadafrik.com" className="text-blue-600">
-                hello@leadafrik.com
+              <a href="mailto:info@leadafrik.com" className="text-blue-600">
+                info@leadafrik.com
               </a>
               . We will correct it and note the change.
             </p>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PostCard from "@/components/PostCard";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { sanityFetch } from "@/lib/sanity.client";
 import { ALL_POSTS_QUERY } from "@/lib/sanity.queries";
 import { SanityPost } from "@/lib/sanity.types";
@@ -19,6 +20,11 @@ export default async function BlogPage() {
         </div>
 
         <ClientSearchBlog posts={posts || []} />
+
+        {/* Newsletter Signup */}
+        <div className="mt-16 pt-12 border-t border-gray-200">
+          <NewsletterSignup />
+        </div>
       </section>
     </div>
   );

@@ -229,7 +229,7 @@ export default function DataPage() {
           <div className="max-w-3xl space-y-4 text-[#5a6b7a]">
             <p>{legalNotice}</p>
             <p className="text-sm pt-4 border-t border-[#e8e4db]">
-              Questions about these datasets or custom extractions? Contact <a href="mailto:omukokookoth@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium">omukokookoth@gmail.com</a>
+              Questions about these datasets or custom extractions? Contact <a href="mailto:info@leadafrik.com" className="text-amber-600 hover:text-amber-700 font-medium">info@leadafrik.com</a>
             </p>
           </div>
         </section>
@@ -243,7 +243,7 @@ export default function DataPage() {
             {ctaDescription}
           </p>
           <p className="text-[#5a6b7a]">
-            Looking for a custom extraction or specific data not listed here? <a href="mailto:omukokookoth@gmail.com" className="text-amber-600 hover:text-amber-700 font-medium">Get in touch with us</a>
+            Looking for a custom extraction or specific data not listed here? <a href="mailto:info@leadafrik.com" className="text-amber-600 hover:text-amber-700 font-medium">Get in touch with us</a>
           </p>
         </div>
       </section>

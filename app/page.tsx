@@ -1,6 +1,7 @@
 import Link from "next/link";
 import PostCard from "@/components/PostCard";
 import DocumentCard from "@/components/DocumentCard";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { sanityFetch } from "@/lib/sanity.client";
 import {
   HOME_SETTINGS_QUERY,
@@ -164,6 +165,11 @@ export default async function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Newsletter Signup Section */}
+      <section className="max-w-6xl mx-auto px-6 py-24 border-t border-gray-200">
+        <NewsletterSignup />
       </section>
     </div>
   );
