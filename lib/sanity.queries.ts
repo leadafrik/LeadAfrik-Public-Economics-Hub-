@@ -48,7 +48,12 @@ export const ALL_DOCUMENTS_QUERY = `
     summary,
     keyTakeaways,
     commentary,
-    pdfFile,
+    pdfFile {
+      asset->{
+        _id,
+        url
+      }
+    },
     relatedPosts[]->,
   }
 `
@@ -65,7 +70,12 @@ export const SINGLE_DOCUMENT_QUERY = `
     summary,
     keyTakeaways,
     commentary,
-    pdfFile,
+    pdfFile {
+      asset->{
+        _id,
+        url
+      }
+    },
     relatedPosts[]->,
   }
 `

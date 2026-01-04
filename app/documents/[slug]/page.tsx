@@ -93,7 +93,7 @@ export default async function DocumentDetailPage({ params }: DocumentDetailPageP
               </span>
             ))}
           </div>
-          {doc.pdfFile && (
+          {doc.pdfFile?.asset?.url && (
             <a
               href={doc.pdfFile.asset.url}
               download

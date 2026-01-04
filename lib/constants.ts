@@ -14,7 +14,7 @@ export const AUTHOR = {
 
 export const SOCIAL_LINKS = {
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "#",
-  youtube: process.env.NEXT_PUBLIC_YOUTUBE_URL || "#",
+  youtube: process.env.NEXT_PUBLIC_YOUTUBE_URL || "https://www.youtube.com/@leadafrik",
   podcast: process.env.NEXT_PUBLIC_PODCAST_URL || "#",
   twitter: process.env.NEXT_PUBLIC_TWITTER_URL || "#",
 };
