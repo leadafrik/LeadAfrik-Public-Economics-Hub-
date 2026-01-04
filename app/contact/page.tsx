@@ -23,10 +23,10 @@ export default function ContactPage() {
           <div className="text-center">
             <p className="text-sm text-gray-600 mb-2">Email</p>
             <a
-              href="mailto:hello@leadafrik.com"
+              href="mailto:info@leadafrik.com"
               className="text-lg font-semibold text-blue-600 hover:text-blue-700"
             >
-              hello@leadafrik.com
+              info@leadafrik.com
             </a>
           </div>
           <div className="text-center">

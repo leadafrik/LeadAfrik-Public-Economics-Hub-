@@ -10,7 +10,8 @@ import learnSettings from './learnSettings'
 import dataset from './dataset'
 import datasetBundle from './datasetBundle'
 import dataSettings from './dataSettings'
+import subscriber from './subscriber'
 
-export const schemaTypes = [post, economicDocument, episode, snapshot, author, homeSettings, aboutSettings, learningModule, learnSettings, dataset, datasetBundle, dataSettings]
+export const schemaTypes = [post, economicDocument, episode, snapshot, author, homeSettings, aboutSettings, learningModule, learnSettings, dataset, datasetBundle, dataSettings, subscriber]
 
 export default schemaTypes

@@ -12,16 +12,15 @@ export default function NewsletterSignup() {
     setStatus('loading');
 
     try {
-      // Hook up your email service here (Mailchimp, Substack, etc.)
-      // const response = await fetch('/api/newsletter', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email }),
-      // });
-      // if (!response.ok) throw new Error('Subscription failed');
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (!response.ok) throw new Error('Subscription failed');
 
       setStatus('success');
-      setMessage('Check your email to confirm.');
+      setMessage('Thank you for subscribing! Check your email to confirm.');
       setEmail('');
       setTimeout(() => setStatus('idle'), 3000);
     } catch (error) {

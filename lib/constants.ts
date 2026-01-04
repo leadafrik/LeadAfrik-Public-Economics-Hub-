@@ -8,7 +8,7 @@ export const SITE_URL =
 
 export const AUTHOR = {
   name: "Stephen Omukoko Okoth",
-  email: "stephen@leadafrik.com",
+  email: "info@leadafrik.com",
   bio: "Mathematical economist interested in public finance, political economy, and making Kenyan economic policy understandable.",
 };
 

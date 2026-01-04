@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
+import { sanityFetch } from '@/lib/sanity.client';
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,44 +14,92 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Integrate with Mailchimp or Substack
-    // For now, log to console and return success
-    console.log('Newsletter signup:', { email, name, timestamp: new Date() });
+    // Check if email already exists
+    const existingSubscriber = await sanityFetch({
+      query: `*[_type == "subscriber" && email == $email][0]`,
+      params: { email },
+    });
 
-    // Example Mailchimp integration (requires MAILCHIMP_API_KEY env var):
-    /*
-    const mailchimpApiKey = process.env.MAILCHIMP_API_KEY;
-    const mailchimpServerPrefix = process.env.MAILCHIMP_SERVER_PREFIX;
-    const mailchimpListId = process.env.MAILCHIMP_LIST_ID;
-
-    if (!mailchimpApiKey || !mailchimpServerPrefix || !mailchimpListId) {
+    if (existingSubscriber) {
       return NextResponse.json(
-        { error: 'Newsletter service not configured' },
-        { status: 500 }
+        { error: 'This email is already subscribed' },
+        { status: 400 }
       );
     }
 
-    const response = await fetch(
-      `https://${mailchimpServerPrefix}.api.mailchimp.com/3.0/lists/${mailchimpListId}/members`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Basic ${Buffer.from(`anystring:${mailchimpApiKey}`).toString('base64')}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email_address: email,
-          status: 'pending',
-          merge_fields: name ? { FNAME: name.split(' ')[0], LNAME: name.split(' ')[1] || '' } : {},
-        }),
-      }
+    // Save to Sanity
+    const sanityClient = await import('@sanity/client').then(m => 
+      m.createClient({
+        projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+        dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+        token: process.env.SANITY_API_TOKEN!,
+        useCdn: false,
+        apiVersion: '2024-01-01',
+      })
     );
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.detail || 'Failed to subscribe');
+    const subscriber = await sanityClient.create({
+      _type: 'subscriber',
+      email,
+      name: name || null,
+      subscriptionDate: new Date().toISOString(),
+      active: true,
+    });
+
+    // Get email credentials from environment
+    const emailHost = process.env.EMAIL_HOST;
+    const emailPort = parseInt(process.env.EMAIL_PORT || '587');
+    const emailUser = process.env.EMAIL_USER;
+    const emailPass = process.env.EMAIL_PASS;
+    const emailFrom = process.env.EMAIL_FROM || emailUser;
+
+    if (emailHost && emailUser && emailPass) {
+      // Create transporter
+      const transporter = nodemailer.createTransport({
+        host: emailHost,
+        port: emailPort,
+        secure: emailPort === 465,
+        auth: {
+          user: emailUser,
+          pass: emailPass,
+        },
+      });
+
+      // Send confirmation email
+      try {
+        await transporter.sendMail({
+          from: emailFrom,
+          to: email,
+          subject: 'Welcome to LeadAfrik Newsletter',
+          html: `
+            <h2>Welcome to LeadAfrik!</h2>
+            <p>Hi ${name || 'there'},</p>
+            <p>Thank you for subscribing to our newsletter. You'll receive monthly data drops, policy analysis, and economic trends.</p>
+            <p>Best regards,<br/>LeadAfrik Team</p>
+          `,
+          text: `Welcome to LeadAfrik!\n\nHi ${name || 'there'},\n\nThank you for subscribing to our newsletter. You'll receive monthly data drops, policy analysis, and economic trends.\n\nBest regards,\nLeadAfrik Team`,
+        });
+
+        // Send notification to admin
+        await transporter.sendMail({
+          from: emailFrom,
+          to: emailUser,
+          subject: 'New Newsletter Signup',
+          html: `
+            <p>New newsletter signup:</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Name:</strong> ${name || 'Not provided'}</p>
+            <p><strong>Date:</strong> ${new Date().toISOString()}</p>
+          `,
+          text: `New newsletter signup:\n\nEmail: ${email}\nName: ${name || 'Not provided'}\nDate: ${new Date().toISOString()}`,
+        });
+      } catch (emailError) {
+        console.error('Email sending error:', emailError);
+        // Continue even if email fails - subscriber is still saved in Sanity
+      }
     }
-    */
+
+    console.log('Newsletter signup saved:', { email, name, timestamp: new Date() });
 
     return NextResponse.json(
       { success: true, message: 'Successfully subscribed to newsletter' },
