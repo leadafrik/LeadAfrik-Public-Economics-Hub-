@@ -49,8 +49,8 @@ export default function CustomDataRequestForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-6 my-8 max-w-2xl">
-      <h3 className="text-lg font-light text-gray-900 mb-4">Custom Data Request</h3>
+    <form onSubmit={handleSubmit} className="bg-white border border-gray-200 p-8 my-8 max-w-2xl">
+      <h3 className="text-lg font-semibold text-gray-900 mb-6">Custom Data Request</h3>
 
       <div className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -61,7 +61,7 @@ export default function CustomDataRequestForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="px-4 py-2 border border-gray-300 text-sm"
+            className="px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
           />
           <input
             type="email"
@@ -70,7 +70,7 @@ export default function CustomDataRequestForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="px-4 py-2 border border-gray-300 text-sm"
+            className="px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
           />
         </div>
 
@@ -80,7 +80,7 @@ export default function CustomDataRequestForm() {
           placeholder="Organization (optional)"
           value={formData.organization}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 text-sm"
+          className="w-full px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
         />
 
         <select
@@ -88,7 +88,7 @@ export default function CustomDataRequestForm() {
           value={formData.dataScope}
           onChange={handleChange}
           required
-          className="w-full px-4 py-2 border border-gray-300 text-sm"
+          className="w-full px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
         >
           <option value="">Select data scope...</option>
           <option value="national">National-level data</option>
@@ -102,7 +102,7 @@ export default function CustomDataRequestForm() {
           name="budget"
           value={formData.budget}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 text-sm"
+          className="w-full px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
         >
           <option value="">Budget range (optional)</option>
           <option value="under-500">Under KES 500</option>
@@ -117,14 +117,14 @@ export default function CustomDataRequestForm() {
           value={formData.description}
           onChange={handleChange}
           rows={4}
-          className="w-full px-4 py-2 border border-gray-300 text-sm"
+          className="w-full px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
         />
       </div>
 
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="mt-4 px-6 py-2 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+        className="mt-4 px-6 py-3 bg-blue-600 text-white text-base font-semibold hover:bg-blue-700 disabled:opacity-50 rounded transition-colors"
       >
         {status === 'loading' ? 'Sending...' : 'Request custom data'}
       </button>

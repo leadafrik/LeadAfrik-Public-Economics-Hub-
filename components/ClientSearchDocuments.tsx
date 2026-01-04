@@ -45,12 +45,12 @@ export default function ClientSearchDocuments({ documents }: ClientSearchDocumen
             placeholder="Search by title, institution..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="md:col-span-2 px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-sm font-medium"
+            className="md:col-span-2 px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-base font-medium text-gray-900"
           />
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-sm font-medium cursor-pointer"
+            className="px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-base font-medium text-gray-900 cursor-pointer"
           >
             <option value="">All categories</option>
             {DOCUMENT_CATEGORIES.map((cat) => (
@@ -62,7 +62,7 @@ export default function ClientSearchDocuments({ documents }: ClientSearchDocumen
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-sm font-medium cursor-pointer"
+            className="px-4 py-3 border border-gray-400 bg-white rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors text-base font-medium text-gray-900 cursor-pointer"
           >
             <option value="">All years</option>
             {years.map((year) => (

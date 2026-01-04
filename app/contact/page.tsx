@@ -55,7 +55,7 @@ export default function ContactPage() {
             <input
               type="text"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
@@ -66,7 +66,7 @@ export default function ContactPage() {
             <input
               type="email"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
@@ -77,7 +77,7 @@ export default function ContactPage() {
             <input
               type="text"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
@@ -88,7 +88,7 @@ export default function ContactPage() {
             <textarea
               required
               rows={6}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-4 py-3 border border-gray-400 rounded-lg text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 

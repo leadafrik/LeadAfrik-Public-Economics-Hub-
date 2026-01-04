@@ -35,7 +35,7 @@ export default function ClientSearchBlog({ posts }: ClientSearchBlogProps) {
           placeholder="Search posts by title, excerpt, or tags..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-200 rounded focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+          className="w-full px-4 py-3 border border-gray-400 rounded text-base font-medium text-gray-900 bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors"
         />
         {searchTerm && (
           <p className="text-sm text-gray-600 mt-2">

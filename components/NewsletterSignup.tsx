@@ -31,14 +31,14 @@ export default function NewsletterSignup() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-50 border border-gray-200 p-6 my-8">
-      <h3 className="text-lg font-light text-gray-900 mb-2">
+    <form onSubmit={handleSubmit} className="bg-gray-50 border border-gray-200 p-8 my-8">
+      <h3 className="text-xl font-semibold text-gray-900 mb-3">
         Get data updates + new analysis
       </h3>
-      <p className="text-sm text-gray-600 mb-4">
+      <p className="text-base text-gray-700 mb-6">
         Newsletter: monthly data drops, policy analysis, and economic trends.
       </p>
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex flex-col sm:flex-row gap-3">
         <input
           type="email"
           placeholder="your@email.com"
@@ -46,18 +46,18 @@ export default function NewsletterSignup() {
           onChange={(e) => setEmail(e.target.value)}
           required
           disabled={status === 'loading'}
-          className="flex-1 px-4 py-2 border border-gray-300 text-sm"
+          className="flex-1 px-4 py-3 border border-gray-400 text-base font-medium text-gray-900 rounded focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="px-4 py-2 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+          className="px-6 py-3 bg-blue-600 text-white text-base font-semibold hover:bg-blue-700 disabled:opacity-50 rounded transition-colors"
         >
           {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
         </button>
       </div>
       {message && (
-        <p className={`text-xs mt-2 ${status === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+        <p className={`text-sm mt-3 font-medium ${status === 'success' ? 'text-green-600' : 'text-red-600'}`}>
           {message}
         </p>
       )}
